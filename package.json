@@ -1,0 +1,34 @@
+{
+  "name": "emaame.github.io",
+  "version": "1.0.0",
+  "description": "Timer for Salmon Run Time",
+  "main": "index.js",
+  "dependencies": {
+    "gh-pages": "^1.1.0",
+    "moment": "^2.19.4",
+    "moment-timezone": "^0.5.14"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "gh-pages": "^1.1.0",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
+  },
+  "scripts": {
+    "webpack": "webpack",
+    "serve": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emaame/salmonrun_time_timer.git"
+  },
+  "author": "ema",
+  "license": "CC-BY-NC-SA-4.0",
+  "bugs": {
+    "url": "https://github.com/emaame/salmonrun_time_timer/issues"
+  },
+  "homepage": "https://github.com/emaame/salmonrun_time_timer#readme"
+}
