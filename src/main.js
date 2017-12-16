@@ -1,5 +1,7 @@
 import SalmonrunTimeTimer from "./salmonrun_time_timer";
-var moment = require('moment-timezone');
+import moment from "moment";
+import "moment-timezone";
+//var moment = require('moment-timezone');
 
 class View {
     constructor() {
@@ -11,17 +13,16 @@ class View {
         var list = this.timer.listup_next_STT();
         var eta = new Date( list[0] - base );
 
-        {   // eta
-            var element = document.getElementById("eta");
-            var text = moment(eta).tz("Asia/Tokyo").format("mm:ss.SSS");
-            element.innerHTML = text;
-        }
+        // eta
+        var elmEta = document.getElementById("eta");
+        var textEta = moment(eta).tz("Asia/Tokyo").format("mm:ss.SSS");
+        elmEta.innerHTML = textEta;
 
         // list
         for(var i = 0; i < list.length; ++i) {
-            var element = document.getElementById("stt-item-" + (i+1));
-            var text = moment(list[i]).tz("Asia/Tokyo").format("MM/DD HH:mm:ss");
-            element.innerHTML = text;
+            var elmSTT = document.getElementById("stt-item-" + (i+1));
+            var textSTT = moment(list[i]).tz("Asia/Tokyo").format("MM/DD HH:mm:ss");
+            elmSTT.innerHTML = textSTT;
         }
 
         var interval = 1000;
@@ -32,7 +33,7 @@ class View {
     }
 }
 
-window.onload = (ev) => {
+window.onload = () => {
     var view = new View();
-    view.update()
+    view.update();
 };
