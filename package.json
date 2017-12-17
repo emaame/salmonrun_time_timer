@@ -4,8 +4,7 @@
   "description": "Timer for Salmon Run Time",
   "main": "index.js",
   "dependencies": {
-    "gh-pages": "^1.1.0",
-    "moment": "^2.19.4"
+    "gh-pages": "^1.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

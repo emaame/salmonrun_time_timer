@@ -1,5 +1,7 @@
 import SalmonrunTimeTimer from "./salmonrun_time_timer";
-import moment from "moment";
+import DateFormatter from "./date_formatter";
+
+const date_formatter = new DateFormatter();
 
 class View {
     constructor() {
@@ -13,13 +15,13 @@ class View {
 
         // eta
         var elmEta = document.getElementById("eta");
-        var textEta = moment(eta).format("mm:ss.SSS");
+        var textEta = date_formatter.getMinText(eta);
         elmEta.innerHTML = textEta;
 
         // list
         for(var i = 0; i < list.length; ++i) {
             var elmSTT = document.getElementById("stt-item-" + (i+1));
-            var textSTT = moment(list[i]).format("MM/DD HH:mm:ss");
+            var textSTT = date_formatter.getMonthText(list[i]);
             elmSTT.innerHTML = textSTT;
         }
 
