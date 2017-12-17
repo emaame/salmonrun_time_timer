@@ -14,3 +14,6 @@ _book
 *.epub
 *.mobi
 *.pdf
+
+# Illustrator temp files
+*._t_
