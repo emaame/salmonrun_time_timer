@@ -1,3 +1,5 @@
+const webpack = require("webpack");
+
 module.exports = {
     // メインとなるJavaScriptファイル（エントリーポイント）
     entry: './src/main.js',
@@ -9,6 +11,10 @@ module.exports = {
       // 出力ファイル名
       filename: 'bundle.js'
     },
+
+    plugins: [
+      new webpack.optimize.UglifyJsPlugin()
+    ],
 
     // Configuration for dev server
     devServer: {
@@ -41,5 +47,5 @@ module.exports = {
       ]
     },
     // ソースマップを有効にする
-    devtool: 'source-map'
+    //devtool: 'source-map'
   };
