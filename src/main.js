@@ -8,11 +8,11 @@ const date_formatter = new DateFormatter();
 class App {
     constructor() {
         this.timer = new SalmonrunTimeTimer();
-        
+
         this.alert = new AlertSound();
         this.alert_functions = {};
         this.alert_functions[15] = (eta) => {
-            const start = eta / 1000 - 20;
+            const start = eta / 1000 - 15;
             const E5 = 329.63;
             const F5 = 349.23;
             const quaver_seconds = 60 / (124 * 2); // 124 [BPM]
