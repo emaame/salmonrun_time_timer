@@ -53,8 +53,8 @@ class App {
     }
     update_sound() {
         const eta_sec = Math.floor(this.eta / 1000);
-        if (!alert_functions[eta_sec]) { return; }
-        alert_functions[eta_sec](this.eta);
+        if (!this.alert_functions[eta_sec]) { return; }
+        this.alert_functions[eta_sec](this.eta);
     }
 
     update() {
