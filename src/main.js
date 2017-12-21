@@ -8,8 +8,9 @@ const date_formatter = new DateFormatter();
 class App {
     constructor() {
         this.timer = new SalmonrunTimeTimer();
-        this.alert_functions = {};
+        
         this.alert = new AlertSound();
+        this.alert_functions = {};
         this.alert_functions[15] = (eta) => {
             const start = eta / 1000 - 20;
             const E5 = 329.63;

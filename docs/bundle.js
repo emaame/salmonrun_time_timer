@@ -1,1 +1,399 @@
-!function(t){function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}var n={};e.m=t,e.c=n,e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:r})},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s=0)}([function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}function o(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}var a=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),i=n(1),u=r(i),c=n(2),l=r(c),s=n(3),f=r(s),d=new l.default,p=function(){function t(){var e=this;o(this,t),this.timer=new u.default,this.alert_functions={},this.alert=new f.default,this.alert_functions[15]=function(t){var n=t/1e3-20,r=329.63,o=[{freq:r,duration:60/248*2},{freq:r,duration:60/248*2},{freq:349.23,duration:60/248*2},{freq:r,duration:60/248*1},{freq:349.23,duration:60/248*1}];e.alert.play_melody(n,o)},this.alert_functions[3]=function(t){e.alert._play_oscillator(440,t/1e3-3,.1)},this.alert_functions[2]=function(t){e.alert._play_oscillator(440,t/1e3-2,.1)},this.alert_functions[1]=function(t){e.alert._play_oscillator(440,t/1e3-1,.1)},this.alert_functions[0]=function(t){e.alert._play_oscillator(880,t/1e3-0,1)}}return a(t,[{key:"calc_eta",value:function(){var t=new Date(Date.now());this.list=this.timer.listup_next_STT(),this.eta=new Date(this.list[0]-t)}},{key:"update_eta",value:function(){var t=document.getElementById("eta"),e=d.getMinText(this.eta);t.innerHTML=e}},{key:"update_list",value:function(){for(var t=0;t<this.list.length;++t){var e=document.getElementById("stt-item-"+(t+1)),n=d.getMonthText(this.list[t]);e.innerHTML=n}}},{key:"update_sound",value:function(){var t=Math.floor(this.eta/1e3);this.alert_functions[t]&&this.alert_functions[t](this.eta)}},{key:"update",value:function(){this.calc_eta(),this.update_eta(),this.update_list(),this.update_sound();var t=1e3;this.eta<6e4&&(t=50),setTimeout(this.update.bind(this),t)}}]),t}();window.onload=function(){(new p).update()}},function(t,e,n){"use strict";function r(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(e,"__esModule",{value:!0});var o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),a=function(){function t(){r(this,t)}return o(t,[{key:"listup_next_STT",value:function(){for(var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:Date.now(),e=[],n=new Date(t),r=Math.floor((n.getMinutes()-2)/8)+1,o=n.getHours();e.length<7;){for(var a=r+1;a<=7&&e.length<7;++a){var i=2+8*(a-1),u=new Date(n);u.setHours(o),u.setMinutes(i),u.setSeconds(0),u.setMilliseconds(0),e.push(u)}r=0,o+=1}return e}}]),t}();e.default=a},function(t,e,n){"use strict";function r(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(e,"__esModule",{value:!0});var o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),a=function(){function t(){r(this,t)}return o(t,[{key:"getMonthText",value:function(t){var e=t.getMonth()+1,n=t.getDate();e<10&&(e="0"+e),n<10&&(n="0"+n);var r=t.getHours(),o=t.getMinutes(),a=t.getSeconds();return r<10&&(r="0"+r),o<10&&(o="0"+o),a<10&&(a="0"+a),e+"/"+n+" "+r+":"+o+":"+a}},{key:"getMinText",value:function(t){var e=t.getMinutes(),n=t.getSeconds(),r=t.getMilliseconds();return e<10&&(e="0"+e),n<10&&(n="0"+n),r<10?r="00"+r:r<100&&(r="0"+r),e+":"+n+"."+r}}]),t}();e.default=a},function(t,e,n){"use strict";function r(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}Object.defineProperty(e,"__esModule",{value:!0});var o=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),a=function(){function t(){r(this,t)}return o(t,[{key:"_createAudioContext",value:function(){return window.AudioContext=window.AudioContext||window.webkitAudioContext,new AudioContext}},{key:"_createOscillator",value:function(t){var e=t.createOscillator();return e.start=e.start||e.noteOn,e.stop=e.stop||e.noteOff,t.createGain=t.createGain||t.createGainNode,e}},{key:"_play_oscillator",value:function(t,e,n){var r=this._createAudioContext(),o=this._createOscillator(r);o.type="string"==typeof o.type?"sine":0,o.frequency.value=t;var a=r.createGain();o.connect(a),a.connect(r.destination),o.start(e),o.stop(e+n)}},{key:"play_melody",value:function(t,e){var n=this._createAudioContext(),r=n.createGain();for(var o in e){var a=this._createOscillator(n),i=e[o];a.type="string"==typeof a.type?"sine":0,a.frequency.value=i.freq,a.connect(r),r.connect(n.destination),a.start(t),a.stop(t+i.duration),t+=i.duration}}}]),t}();e.default=a}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _salmonrun_time_timer = __webpack_require__(1);
+
+var _salmonrun_time_timer2 = _interopRequireDefault(_salmonrun_time_timer);
+
+var _date_formatter = __webpack_require__(2);
+
+var _date_formatter2 = _interopRequireDefault(_date_formatter);
+
+var _alert_sound = __webpack_require__(3);
+
+var _alert_sound2 = _interopRequireDefault(_alert_sound);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var date_formatter = new _date_formatter2.default();
+
+var App = function () {
+    function App() {
+        var _this = this;
+
+        _classCallCheck(this, App);
+
+        this.timer = new _salmonrun_time_timer2.default();
+
+        this.alert = new _alert_sound2.default();
+        this.alert_functions = {};
+        this.alert_functions[15] = function (eta) {
+            var start = eta / 1000 - 20;
+            var E5 = 329.63;
+            var F5 = 349.23;
+            var quaver_seconds = 60 / (124 * 2); // 124 [BPM]
+
+            var melody = [{ freq: E5, duration: quaver_seconds * 2 }, { freq: E5, duration: quaver_seconds * 2 }, { freq: F5, duration: quaver_seconds * 2 }, { freq: E5, duration: quaver_seconds * 1 }, { freq: F5, duration: quaver_seconds * 1 }];
+            _this.alert.play_melody(start, melody);
+        };
+        this.alert_functions[3] = function (eta) {
+            _this.alert._play_oscillator(440, eta / 1000 - 3, 0.1);
+        };
+        this.alert_functions[2] = function (eta) {
+            _this.alert._play_oscillator(440, eta / 1000 - 2, 0.1);
+        };
+        this.alert_functions[1] = function (eta) {
+            _this.alert._play_oscillator(440, eta / 1000 - 1, 0.1);
+        };
+        this.alert_functions[0] = function (eta) {
+            _this.alert._play_oscillator(880, eta / 1000 - 0, 1.0);
+        };
+    }
+
+    _createClass(App, [{
+        key: "calc_eta",
+        value: function calc_eta() {
+            var base = new Date(Date.now());
+            this.list = this.timer.listup_next_STT();
+            this.eta = new Date(this.list[0] - base);
+        }
+    }, {
+        key: "update_eta",
+        value: function update_eta() {
+            // eta
+            var elmEta = document.getElementById("eta");
+            var textEta = date_formatter.getMinText(this.eta);
+            elmEta.innerHTML = textEta;
+        }
+    }, {
+        key: "update_list",
+        value: function update_list() {
+            // list
+            for (var i = 0; i < this.list.length; ++i) {
+                var elmSTT = document.getElementById("stt-item-" + (i + 1));
+                var textSTT = date_formatter.getMonthText(this.list[i]);
+                elmSTT.innerHTML = textSTT;
+            }
+        }
+    }, {
+        key: "update_sound",
+        value: function update_sound() {
+            var eta_sec = Math.floor(this.eta / 1000);
+            if (!this.alert_functions[eta_sec]) {
+                return;
+            }
+            this.alert_functions[eta_sec](this.eta);
+        }
+    }, {
+        key: "update",
+        value: function update() {
+            this.calc_eta();
+            this.update_eta();
+            this.update_list();
+            this.update_sound();
+
+            var interval = 1000;
+            if (this.eta < 60 * 1000) {
+                interval = 50;
+            }
+            setTimeout(this.update.bind(this), interval);
+        }
+    }]);
+
+    return App;
+}();
+
+window.onload = function () {
+    var app = new App();
+    app.update();
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var SalmonrunTimeTimer = function () {
+    function SalmonrunTimeTimer() {
+        _classCallCheck(this, SalmonrunTimeTimer);
+    }
+
+    // テストしやすいように基準の日時を渡せるようにした
+
+
+    _createClass(SalmonrunTimeTimer, [{
+        key: "listup_next_STT",
+        value: function listup_next_STT() {
+            var date = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Date.now();
+
+            var list = [];
+            var base = new Date(date);
+
+            //  period |   0   |            1            | 2  ...  6 |            7            | 8
+            // minutes | 00 01 | 02 03 04 05 06 07 08 09 | 10 ... 49 | 50 51 52 53 54 55 56 57 | 58 59
+            var period = Math.floor((base.getMinutes() - 2) / 8) + 1; // it becomes 0 to 8
+
+            // in this hour (upto 1st(:02),2nd(:10), ... ,7th(:50))
+            var hours = base.getHours();
+
+            // iterate about hours
+            for (; list.length < 7;) {
+                // in this hour
+                // i が 8 なら次の時間へ、もしくは 7 件埋まれば終了
+                for (var i = period + 1; i <= 7 && list.length < 7; ++i) {
+                    var minutes = 2 + (i - 1) * 8;
+                    var d = new Date(base);
+                    d.setHours(hours);
+                    d.setMinutes(minutes);
+                    d.setSeconds(0);
+                    d.setMilliseconds(0);
+                    list.push(d);
+                }
+                // for next hour
+                period = 0;
+                hours += 1;
+            }
+            return list;
+        }
+    }]);
+
+    return SalmonrunTimeTimer;
+}();
+
+exports.default = SalmonrunTimeTimer;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+        value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var DateFormatter = function () {
+        function DateFormatter() {
+                _classCallCheck(this, DateFormatter);
+        }
+
+        _createClass(DateFormatter, [{
+                key: "getMonthText",
+                value: function getMonthText(d) {
+                        var MM = d.getMonth() + 1;
+                        var DD = d.getDate();
+                        if (MM < 10) MM = "0" + MM;
+                        if (DD < 10) DD = "0" + DD;
+
+                        var hh = d.getHours();
+                        var mm = d.getMinutes();
+                        var ss = d.getSeconds();
+
+                        if (hh < 10) hh = "0" + hh;
+                        if (mm < 10) mm = "0" + mm;
+                        if (ss < 10) ss = "0" + ss;
+
+                        return MM + "/" + DD + " " + hh + ":" + mm + ":" + ss;
+                }
+        }, {
+                key: "getMinText",
+                value: function getMinText(d) {
+                        var mm = d.getMinutes();
+                        var ss = d.getSeconds();
+                        var SSS = d.getMilliseconds();
+
+                        if (mm < 10) mm = "0" + mm;
+                        if (ss < 10) ss = "0" + ss;
+                        if (SSS < 10) {
+                                SSS = "00" + SSS;
+                        } else if (SSS < 100) {
+                                SSS = "0" + SSS;
+                        }
+
+                        return mm + ":" + ss + "." + SSS;
+                }
+        }]);
+
+        return DateFormatter;
+}();
+
+exports.default = DateFormatter;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var AlertSound = function () {
+    function AlertSound() {
+        _classCallCheck(this, AlertSound);
+    }
+
+    _createClass(AlertSound, [{
+        key: "_createAudioContext",
+        value: function _createAudioContext() {
+            window.AudioContext = window.AudioContext || window.webkitAudioContext;
+            return new AudioContext();
+        }
+    }, {
+        key: "_createOscillator",
+        value: function _createOscillator(context) {
+            var oscillator = context.createOscillator();
+
+            // for legacy browsers
+            oscillator.start = oscillator.start || oscillator.noteOn;
+            oscillator.stop = oscillator.stop || oscillator.noteOff;
+            context.createGain = context.createGain || context.createGainNode;
+            return oscillator;
+        }
+    }, {
+        key: "_play_oscillator",
+        value: function _play_oscillator(freq, start, duration) {
+            var context = this._createAudioContext();
+            var oscillator = this._createOscillator(context);
+
+            // set oscillator parameters
+            oscillator.type = typeof oscillator.type === "string" ? "sine" : 0; // Sine wave
+            oscillator.frequency.value = freq;
+
+            // Create the instance of GainNode
+            var gain = context.createGain();
+
+            // OscillatorNode (Input) -> GainNode (Volume) -> AudioDestinationNode (Output)
+            oscillator.connect(gain);
+            gain.connect(context.destination);
+            // Start sound
+            oscillator.start(start);
+            oscillator.stop(start + duration);
+        }
+    }, {
+        key: "play_melody",
+        value: function play_melody(start, melody) {
+            var context = this._createAudioContext();
+            // Create the instance of GainNode
+            var gain = context.createGain();
+
+            for (var i in melody) {
+                var oscillator = this._createOscillator(context);
+                // set oscillator parameters
+                var note = melody[i];
+                oscillator.type = typeof oscillator.type === "string" ? "sine" : 0; // Sine wave
+                oscillator.frequency.value = note.freq;
+
+                // OscillatorNode (Input) -> GainNode (Volume) -> AudioDestinationNode (Output)
+                oscillator.connect(gain);
+                gain.connect(context.destination);
+                // Start sound
+                oscillator.start(start);
+                oscillator.stop(start + note.duration);
+                start += note.duration;
+            }
+        }
+    }]);
+
+    return AlertSound;
+}();
+
+exports.default = AlertSound;
+
+/***/ })
+/******/ ]);
+//# sourceMappingURL=bundle.js.map
