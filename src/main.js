@@ -7,26 +7,32 @@ class View {
     constructor() {
         this.timer = new SalmonrunTimeTimer();
     }
-    
-    update() {
-        var base = new Date(Date.now());
-        var list = this.timer.listup_next_STT();
-        var eta = new Date( list[0] - base );
-
+    calc_eta() {
+        const base = new Date(Date.now());
+        this.list = this.timer.listup_next_STT();
+        this.eta = new Date(this.list[0] - base);
+    }
+    update_eta() {
         // eta
-        var elmEta = document.getElementById("eta");
-        var textEta = date_formatter.getMinText(eta);
+        const elmEta = document.getElementById("eta");
+        const textEta = date_formatter.getMinText(this.eta);
         elmEta.innerHTML = textEta;
-
+    }
+    update_list() {
         // list
-        for(var i = 0; i < list.length; ++i) {
-            var elmSTT = document.getElementById("stt-item-" + (i+1));
-            var textSTT = date_formatter.getMonthText(list[i]);
+        for (var i = 0; i < this.list.length; ++i) {
+            const elmSTT = document.getElementById("stt-item-" + (i + 1));
+            const textSTT = date_formatter.getMonthText(this.list[i]);
             elmSTT.innerHTML = textSTT;
         }
+    }
+    update() {
+        this.calc_eta();
+        this.update_eta();
+        this.update_list();
 
         var interval = 1000;
-        if (eta < 60*1000) {
+        if (this.eta < 60*1000) {
             interval = 50;
         }
         setTimeout(this.update.bind(this), interval);
