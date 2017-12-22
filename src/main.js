@@ -16,13 +16,12 @@ class App {
             const E5 = 329.63;
             const F5 = 349.23;
             const quaver_seconds = 60 / (124 * 2); // 124 [BPM]
-        
             const melody = [
-                { freq: E5, duration: quaver_seconds * 2 },
-                { freq: E5, duration: quaver_seconds * 2 },
-                { freq: F5, duration: quaver_seconds * 2 },
-                { freq: E5, duration: quaver_seconds * 1 },
-                { freq: F5, duration: quaver_seconds * 1 },
+                { type: "triangle", freq: E5, duration: quaver_seconds * 2 },
+                { type: "triangle", freq: E5, duration: quaver_seconds * 2 },
+                { type: "triangle", freq: F5, duration: quaver_seconds * 2 },
+                { type: "triangle", freq: E5, duration: quaver_seconds * 1 },
+                { type: "triangle", freq: F5, duration: quaver_seconds * 1 },
             ];
             this.alert.play_melody(start, melody);
         };
@@ -30,7 +29,6 @@ class App {
         this.alert_functions[2] = (eta) => { this.alert._play_oscillator(440, eta / 1000 - 2, 0.1); };
         this.alert_functions[1] = (eta) => { this.alert._play_oscillator(440, eta / 1000 - 1, 0.1); };
         this.alert_functions[0] = (eta) => { this.alert._play_oscillator(880, eta / 1000 - 0, 1.0); };
-        
     }
 
     calc_eta() {

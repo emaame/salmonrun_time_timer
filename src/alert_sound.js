@@ -8,21 +8,30 @@ class AlertSound {
     }
     _createOscillator(context) {
         var oscillator = context.createOscillator();
-        
+
         // for legacy browsers
         oscillator.start = oscillator.start || oscillator.noteOn;
-        oscillator.stop  = oscillator.stop  || oscillator.noteOff;
+        oscillator.stop = oscillator.stop || oscillator.noteOff;
         context.createGain = context.createGain || context.createGainNode;
         return oscillator;
     }
 
-    _play_oscillator(freq, start, duration) {
-        const context = this._createAudioContext();
+    _play_oscillator(context, start, note) {
         var oscillator = this._createOscillator(context);
-        
-        // set oscillator parameters
-        oscillator.type = (typeof oscillator.type === "string") ? "sine" : 0;  // Sine wave
-        oscillator.frequency.value = freq;
+
+        // set oscillator parameters .. fail back
+        if (typeof oscillator.type === "string") {
+            oscillator.type = note.type;
+        } else {
+            switch (note.type) {
+            case "sine": oscillator.type = 0; break;
+            case "square": oscillator.type = 1; break;
+            case "sawtooth": oscillator.type = 2; break;
+            case "triangle": oscillator.type = 3; break;
+            default: oscillator.type = 0; break;
+            }
+        }
+        oscillator.frequency.value = note.freq;
 
         // Create the instance of GainNode
         const gain = context.createGain();
@@ -32,27 +41,14 @@ class AlertSound {
         gain.connect(context.destination);
         // Start sound
         oscillator.start(start);
-        oscillator.stop(start + duration);
+        oscillator.stop(start + note.duration);
     }
-    play_melody(start, melody)
-    {
+    play_melody(start, melody) {
         const context = this._createAudioContext();
-        // Create the instance of GainNode
-        const gain = context.createGain();
 
-        for(var i in melody) {
-            var oscillator = this._createOscillator(context);
-            // set oscillator parameters
+        for (var i in melody) {
             const note = melody[i];
-            oscillator.type = (typeof oscillator.type === "string") ? "sine" : 0;  // Sine wave
-            oscillator.frequency.value = note.freq;
-    
-            // OscillatorNode (Input) -> GainNode (Volume) -> AudioDestinationNode (Output)
-            oscillator.connect(gain);
-            gain.connect(context.destination);
-            // Start sound
-            oscillator.start(start);
-            oscillator.stop(start + note.duration);
+            this._play_oscillator(context, start, note);
             start += note.duration;
         }
     }

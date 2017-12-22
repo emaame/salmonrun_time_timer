@@ -105,8 +105,7 @@ var App = function () {
             var E5 = 329.63;
             var F5 = 349.23;
             var quaver_seconds = 60 / (124 * 2); // 124 [BPM]
-
-            var melody = [{ freq: E5, duration: quaver_seconds * 2 }, { freq: E5, duration: quaver_seconds * 2 }, { freq: F5, duration: quaver_seconds * 2 }, { freq: E5, duration: quaver_seconds * 1 }, { freq: F5, duration: quaver_seconds * 1 }];
+            var melody = [{ type: "triangle", freq: E5, duration: quaver_seconds * 2 }, { type: "triangle", freq: E5, duration: quaver_seconds * 2 }, { type: "triangle", freq: F5, duration: quaver_seconds * 2 }, { type: "triangle", freq: E5, duration: quaver_seconds * 1 }, { type: "triangle", freq: F5, duration: quaver_seconds * 1 }];
             _this.alert.play_melody(start, melody);
         };
         this.alert_functions[3] = function (eta) {
@@ -346,13 +345,27 @@ var AlertSound = function () {
         }
     }, {
         key: "_play_oscillator",
-        value: function _play_oscillator(freq, start, duration) {
-            var context = this._createAudioContext();
+        value: function _play_oscillator(context, start, note) {
             var oscillator = this._createOscillator(context);
 
-            // set oscillator parameters
-            oscillator.type = typeof oscillator.type === "string" ? "sine" : 0; // Sine wave
-            oscillator.frequency.value = freq;
+            // set oscillator parameters .. fail back
+            if (typeof oscillator.type === "string") {
+                oscillator.type = note.type;
+            } else {
+                switch (note.type) {
+                    case "sine":
+                        oscillator.type = 0;break;
+                    case "square":
+                        oscillator.type = 1;break;
+                    case "sawtooth":
+                        oscillator.type = 2;break;
+                    case "triangle":
+                        oscillator.type = 3;break;
+                    default:
+                        oscillator.type = 0;break;
+                }
+            }
+            oscillator.frequency.value = note.freq;
 
             // Create the instance of GainNode
             var gain = context.createGain();
@@ -362,28 +375,16 @@ var AlertSound = function () {
             gain.connect(context.destination);
             // Start sound
             oscillator.start(start);
-            oscillator.stop(start + duration);
+            oscillator.stop(start + note.duration);
         }
     }, {
         key: "play_melody",
         value: function play_melody(start, melody) {
             var context = this._createAudioContext();
-            // Create the instance of GainNode
-            var gain = context.createGain();
 
             for (var i in melody) {
-                var oscillator = this._createOscillator(context);
-                // set oscillator parameters
                 var note = melody[i];
-                oscillator.type = typeof oscillator.type === "string" ? "sine" : 0; // Sine wave
-                oscillator.frequency.value = note.freq;
-
-                // OscillatorNode (Input) -> GainNode (Volume) -> AudioDestinationNode (Output)
-                oscillator.connect(gain);
-                gain.connect(context.destination);
-                // Start sound
-                oscillator.start(start);
-                oscillator.stop(start + note.duration);
+                this._play_oscillator(context, start, note);
                 start += note.duration;
             }
         }
