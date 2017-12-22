@@ -4,6 +4,14 @@ import AlertSound from "./alert_sound";
 
 const date_formatter = new DateFormatter();
 
+class Config {
+    constructor() {
+        this.localStorage = window.localStorage;
+    }
+    isSoundEnabled() {
+        this.localStorage.getItem("sound-enabled");
+    }
+}
 
 class App {
     constructor() {
@@ -29,6 +37,7 @@ class App {
         this.alert_functions[2] = (eta) => { this.alert._play_oscillator(440, eta / 1000 - 2, 0.1); };
         this.alert_functions[1] = (eta) => { this.alert._play_oscillator(440, eta / 1000 - 1, 0.1); };
         this.alert_functions[0] = (eta) => { this.alert._play_oscillator(880, eta / 1000 - 0, 1.0); };
+
     }
 
     calc_eta() {
@@ -60,7 +69,11 @@ class App {
         this.calc_eta();
         this.update_eta();
         this.update_list();
-        this.update_sound();
+        try {
+            this.update_sound();
+        } catch(e) {
+            console.log(e);
+        }
 
         var interval = 1000;
         if (this.eta < 60 * 1000) {
