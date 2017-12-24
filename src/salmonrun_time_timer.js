@@ -6,7 +6,7 @@ class SalmonrunTimeTimer {
     // テストしやすいように基準の日時を渡せるようにした
     listup_next_STT(date = Date.now()) {
         var list = [];
-        const base = new Date(date + (this.time_offset.offset ? 0 : this.time_offset.offset));
+        const base = new Date(date - (this.time_offset.offset ? 0 : this.time_offset.offset));
 
         //  period |   0   |            1            | 2  ...  6 |            7            | 8
         // minutes | 00 01 | 02 03 04 05 06 07 08 09 | 10 ... 49 | 50 51 52 53 54 55 56 57 | 58 59

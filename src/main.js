@@ -15,7 +15,7 @@ class App {
         const base = new Date(Date.now());
         this.list = this.timer.listup_next_STT();
         var eta = this.list[0] - base;
-        if (this.time_offset.offset) { eta += this.time_offset.offset; }
+        if (this.time_offset.offset) { eta -= this.time_offset.offset; }
         this.eta = new Date(eta);
     }
     update_eta() {
