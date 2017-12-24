@@ -27,11 +27,11 @@ class App {
         if (this.time_offset.offset) {
             var textOffset;
             if (this.time_offset.offset < 0) {
-                textOffset = "- " + date_formatter.getMinText(new Date(-this.time_offset.offset));
+                textOffset = "-" + date_formatter.getMinText(new Date(-this.time_offset.offset));
             } else {
-                textOffset = "+ " + date_formatter.getMinText(new Date( this.time_offset.offset));
+                textOffset = "+" + date_formatter.getMinText(new Date( this.time_offset.offset));
             }
-            elmOffset.innerHTML = textOffset + " を補正済み";
+            elmOffset.innerHTML = "補正 " + textOffset;
         } else {
             elmOffset.innerHTML = "時刻合わせ中 ...";
         }
