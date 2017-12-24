@@ -3,7 +3,7 @@ import DateFormatter from "./date_formatter";
 
 const date_formatter = new DateFormatter();
 
-class View {
+class App {
     constructor() {
         this.timer = new SalmonrunTimeTimer();
     }
@@ -20,8 +20,8 @@ class View {
     }
     update_list() {
         // list
-        for (var i = 0; i < this.list.length; ++i) {
-            const elmSTT = document.getElementById("stt-item-" + (i + 1));
+        for(let i in this.list) {
+            const elmSTT = document.getElementById("stt-item-" + (Number(i) + 1));
             const textSTT = date_formatter.getMonthText(this.list[i]);
             elmSTT.innerHTML = textSTT;
         }
@@ -40,6 +40,6 @@ class View {
 }
 
 window.onload = () => {
-    var view = new View();
-    view.update();
+    var app = new App();
+    app.update();
 };
