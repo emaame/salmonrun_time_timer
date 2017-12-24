@@ -1,11 +1,17 @@
 class SalmonrunTimeTimer {
-    constructor() {
+    constructor(time_offset = null) {
+        this.time_offset = time_offset;
     }
 
     // テストしやすいように基準の日時を渡せるようにした
     listup_next_STT(date = Date.now()) {
         var list = [];
-        var base = new Date(date);
+        var base;
+        if (this.time_offset) {
+            base = this.time_offset.get_time(date);
+        } else {
+            base = new Date(date);
+        }
 
         //  period |   0   |            1            | 2  ...  6 |            7            | 8
         // minutes | 00 01 | 02 03 04 05 06 07 08 09 | 10 ... 49 | 50 51 52 53 54 55 56 57 | 58 59

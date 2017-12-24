@@ -34,35 +34,6 @@
 
 <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <!--
-        <div class="stt-header mdl-layout__header mdl-layout__header--waterfall">
-            <div class="mdl-layout__header-row">
-                <span class="stt-title mdl-layout-title">
-                    <h1>
-                        <p>
-                            <img class="stt-logo-image" src="favicon.png" /> サーモンランタイム タイマー
-                        </p>
-                    </h1>
-                </span>
-        -->
-        <!-- Add spacer, to align navigation to the right in desktop -->
-        <!--
-                <div class="stt-header-spacer mdl-layout-spacer"></div>
-        -->
-        <!-- Navigation -->
-        <!--
-                <div class="stt-navigation-container">
-                    <nav class="stt-navigation mdl-navigation">
-                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="">Timer</a>
-                        <a class="mdl-navigation__link mdl-typography--text-uppercase" href="">About</a>
-                    </nav>
-                </div>
-                <span class="stt-mobile-title mdl-layout-title">
-                    <img class="stt-logo-image" src="favicon.png">
-                </span>
-            </div>
-        </div>
-        -->
         <div class="stt-content mdl-layout__content">
             <a name="top"></a>
             <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
@@ -70,17 +41,21 @@
                 </header>
                 <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-color--grey-800">
                     <div class="mdl-card__supporting-text">
-                        <label for="eta" class="mdl-typography--display-1 mdl-color-text--grey-600">次のサーモンランタイムまで(eta)</label>
+                        <label for="eta" class="mdl-typography--headline mdl-color-text--grey-600">サーモンランタイムまで</label>
                         <p id="eta" class="mdl-typography--display-4 mdl-color-text--grey-200"></p>
+                        <p id="offset" class="mdl-typography--headline mdl-color-text--grey-600"></p>
                     </div>
                 </div>
             </section>
 
             <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp mdl-color-text--grey-200">
                 <a name="about"></a>
-                <p><strong class="mdl-typography--headline">端末の時計をみています。時計のズレは <a href="https://www.nict.go.jp/JST/JST5.html">JST Clock</a> で簡易確認できます。</strong> 時間の合わせ方はググってね！</p>
+                <p>
+                    <strong class="mdl-typography--headline">NICTのサービスを利用して時刻合わせして表示しています。</strong>
+                </p>
+                <p><a href="https://www.nict.go.jp/JST/JST5.html">JST Clock</a> と同じ仕組みです。</p>
                 <p><strong>サーモンランの開催状況はみてないよ！</strong></p>
-                <p>iPhone だと「共有」→「ホーム画面に追加」で アプリのように利用できます。便利だね！</p>
+                <p>「ホーム画面に追加」で アプリのように利用できます。便利だね！</p>
             </section>
             
             <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
@@ -156,6 +131,17 @@
                             7回先
                         </div>
                     </div>
+                </div>
+            </section>
+            <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp mdl-color-text--grey-200">
+                <p>
+                    <button id="toggle_time_offset_information" class="mdl-button mdl-js-button mdl-button--raised">
+                        時刻取得結果の表示
+                    </button>
+                </p>
+                <div id="jst_detail">
+                    <p id="jst_status" class="mdl-typography--display-1 mdl-color-text--grey-200"></p>
+                    <p id="jst_error" class="mdl-typography--display-1 mdl-color-text--grey-200"></p>
                 </div>
             </section>
         </div>
