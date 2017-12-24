@@ -14,6 +14,14 @@ class TimeOffset {
         this.offset = 0;
         this.get_offset();
     }
+
+    get_time(date = Date.now()) {
+        if (this.offset) {
+            return new Date(date + this.offset);
+        } else {
+            return new Date(date);
+        }
+    }
     
     get_offset() {
         this.results = new Array();

@@ -12,10 +12,9 @@ class App {
         document.getElementById("toggle_time_offset_information").addEventListener( "click", this.toggle_jst_detail.bind(this) );
     }
     calc_eta() {
-        const base = new Date(Date.now());
         this.list = this.timer.listup_next_STT();
-        var eta = this.list[0] - base;
-        if (this.time_offset.offset) { eta -= this.time_offset.offset; }
+        const now = this.time_offset.get_time();
+        var eta = this.list[0] - now;
         this.eta = new Date(eta);
     }
     update_eta() {
