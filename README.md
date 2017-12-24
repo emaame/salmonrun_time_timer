@@ -12,13 +12,19 @@ A web-based countdown Timer for Salmon Run Time.
 
 テッパン・モグラを誘導できるイカをスナイプ！
 
-# install to local
+# 時刻合わせについて
+v1.1 (2017/12/25) から、「NICT インターネット時刻供給サービス」のJSON形式時刻情報を取得し、時間合わせを行うようにしました。
+
+NICT のサーバへの負荷を減らすためロード時に一回だけ時刻合わせを行います。
+長時間の利用の場合には、必ず数時間程度の間隔を置いてからリロードをお願いします。
+
+# Install to local
 ```
 git clone https://github.com/emaame/salmonrun_time_timer.git
 npm install
 ```
 
-# build
+# Build
 `npm run webpack`
 
 `src/*.js` are packed to `docs/bundle.js`.
@@ -26,8 +32,17 @@ npm install
 # webpack-dev-server
 `npm run serve`
 
-# run test
+# Run test
 `npm run test`
 
 # License
 [CC-BY-NC-SA-4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja)
+
+`src/reference` の `jst_clock.html` および `JST5.js` は [JST Clock](https://www.nict.go.jp/JST/JST5.html) のコピーとなります。
+「Copyright (C) 1998 - 2013 NICT, Hiroshi Toriyama, All Rights Reserved.」とあるのですが、ライセンスは書かれていません。
+これらは文字通り参考用に含めています。
+
+また、そちらから `fetch` / `calculate` / `errmsg` / `toggle` 関数を `src/time_offset.js` にコピペして、多少書き換えています。
+閏秒まわりの処理も入っているようなのですが、変には触ってないつもりです。
+`src/time_offset.js` に関するライセンスは [CC-BY-NC-SA-4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja) の対象外とし、
+ライセンス不明とします。
