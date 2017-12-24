@@ -544,3 +544,9 @@ a {
     display: none;
   }
 }
+
+
+/* jst */
+#jst_detail {
+  display: none;
+}
