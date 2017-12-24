@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="ja">
+
+<head>
+  <title>JST Clock</title>
+  <meta http-equiv="Refresh" content="3600">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <style type="text/css">
+<!--
+body {margin: 0; padding: 0; line-height: 1.5em; color: #000000; bgcolor:#FFFFFF;}
+hr {border-width:1px 0px 0px; border-style:dashed; border-color:#666666; height:1px;}
+th,td {line-height:20px; font-size:14px;}
+a:link {color:blue;}
+a:visited {color:blue;}
+a:hover {color:green;}
+INPUT.txtbox {border:0 solid; background-color:#FFFFFF; font-size:20px; color:#000000; font-weight:bold;}
+#Details {display:none;}
+-->
+  </style>
+  <script type="text/javascript">
+<!--
+var ServerList = [
+	"//ntp-a1.nict.go.jp/cgi-bin/json",
+	"//ntp-b1.nict.go.jp/cgi-bin/json",
+	"//ntp-a4.nict.go.jp/cgi-bin/json" ];
+var Text = {
+	error:    "<h3>時刻情報取得状況：　失敗<\/h3>",
+	warning:  "<h3>時刻情報取得状況：　不完全<\/h3>",
+	normal:   "<h3>時刻情報取得状況：　良好<\/h3>",
+	incompat: "<h3>ご使用中のブラウザには対応していません。他のブラウザでご利用ください。<\/h3>",
+	correct:  "合っています",
+	fast:     " 秒 進んでいます",
+	slow:     " 秒 遅れています" };
+-->
+  </script>
+  <script type="text/javascript" src="json2.js"></script>
+  <script type="text/javascript" src="JST5.js"></script>
+</head>
+
+<body onLoad="startclock()" onUnload="stopclock()">
+  <table summary="head title" width="650" border="0" cellpadding="0" cellspacing="0" align="center">
+    <tr>
+      <td>
+        <table summary="link" width="600" border="0" cellspacing="0" cellpadding="0"  align="center">
+          <tr>
+            <td>
+              <div style="padding-top:20px;" align="center">
+                <a href="http://www.nict.go.jp/index.html"><img src="/common/image/logo-org-0330x0090-ej.png" alt="NICT"></a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div style="padding-top:7px;" align="center">
+                <a href="http://jjy.nict.go.jp/index.html"><img src="title_time.png" alt="JJY" border="0" width="579" height="33"></a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <br>
+              情報通信研究機構は日本標準時を決定・維持しています。<br>
+              本ページでは、「NICT インターネット時刻供給サービス」のJSON形式時刻情報を取得し、
+              これを元にJavaScript プログラムで各種の時刻を表示しています。
+              <a href="javascript:toggle('Details')">（時刻取得結果の表示）</a><br>
+              <div id="ServerStat" align="center"><h3>時刻情報取得状況：　取得中</h3></div>
+              <div id="Details"></div>
+            </td>
+          </tr>
+        </table>
+
+        <hr>
+        <form name="clock" onsubmit="0" action="#">
+          <table summary="time" cellpadding="2" border="0" align="center">
+            <tr>
+              <td colspan="2" nowrap align="center">
+                <font size="4"><b>サーバから供給された時刻</b></font>
+              </td>
+            </tr>
+            <tr>
+              <td align="right" nowrap>日本標準時(JST) :</td>
+              <td nowrap> <input class="txtbox" type="text" name="JST" size="40" value=""> </td>
+            </tr>
+            <tr>
+              <td align="right" nowrap>協定世界時(UTC) :</td>
+              <td nowrap> <input class="txtbox" type="text" name="UTC" size="40" value=""> </td>
+            </tr>
+            <tr>
+              <td align="right" nowrap>国際原子時(TAI) :</td>
+              <td nowrap> <input class="txtbox" type="text" name="TAI" size="40" value=""> </td>
+            </tr>
+            <tr>
+              <td align="right" nowrap>地域標準時 :</td>
+              <td nowrap> <input class="txtbox" type="text" name="LOC" size="40" value=""> </td>
+            </tr>
+            <tr>
+              <td colspan="2" nowrap align="center"><br>
+                <font size="4"><b>あなたのコンピュータの内蔵時計</b></font>
+              </td>
+            </tr>
+            <tr>
+              <td align="right" nowrap>時刻 :</td>
+              <td nowrap> <input class="txtbox" type="text" name="LOCAL" size="40" value=""> </td>
+            </tr>
+            <tr>
+              <td align="right" nowrap>地域標準時との差 :</td>
+              <td nowrap> <input class="txtbox" type="text" name="offset" size="40" value=""> </td>
+            </tr>
+          </table>
+        </form>
+
+        <hr>
+        <table summary="usage" width="600" border="0" cellspacing="0" cellpadding="0" align="center">
+          <tr>
+            <td>
+              <font color="#FF6600">■</font>本ページは正確な日本標準時の提供を目的としたものではありません。
+              <ul>
+                <li type="square">通信回線の速度、混雑状況によっては、大きな誤差を生ずることがあります。</li>
+                <li type="square">夏時間・冬時間の切り替えは、再読み込み後に反映されます。</li>
+                <li type="square">本ページは、約１時間毎に自動再読み込みされます。</li>
+                <li type="square">このページに関するお問い合わせはこちらまで。　<img src="jst.png" align="middle" alt="toiawase" width=128 height=32 border="0"></li>
+              </ul>
+            </td>
+          </tr>
+        </table>
+        <table summary="link" width="600" border="0" cellspacing="0" cellpadding="0" align="center">
+          <tr>
+            <td align="center">
+              <a href="http://www.nict.go.jp/JST/http.html"><img src="info.png" alt="技術情報" width="128" border="0"><br>このページの技術情報</a>
+            </td>
+            <td align="center">
+              <a href="http://jjy.nict.go.jp/mission/page1.html"><img src="no04_00.jpg" alt="協定世界時" width="110" border="0"><br>日本標準時って何？</a>
+            </td>
+            <td align="center">
+              <a href="JST6.html"><img src="dekamoji.png" alt="でか文字表示" width="128" border="0"><br>大型文字表示</a>
+            </td>
+            <td align="center">
+              <a href="http://jjy.nict.go.jp/ntp/"><img src="tokei_awase2.png" alt="Public NTP Service" width="128" border="0"><br>NICT 公開NTPサービス</a>
+            </td>
+          </tr>
+        </table>
+        <br>
+      </td>
+    </tr>
+    <tr>
+      <td height="15" colspan="3" align="center" vAlign=middle bgcolor="#000000" class="f14">
+        <font color="#FFFFFF">
+        Copyright(C)
+        2008-2013 Hiroshi Toriyama, Japan Standard Time Project, NICT, 
+        All Rights Reserved. 
+        </font>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
