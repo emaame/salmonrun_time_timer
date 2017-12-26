@@ -34,8 +34,8 @@ class TimeOffset {
             var now = new Date();	 		// Receive time
             if( json.st && json.it && json.leap && json.next && json.step ) {
                 json.rt = now.getTime(); 		// Receive time
-                json.it = Number(json.it) * 1000; 			// Initiate time
-                json.st = Number(json.st) * 1000; 			// Send time
+                json.it = Number(json.it) * 1000; 	// Initiate time
+                json.st = Number(json.st) * 1000; 	// Send time
                 json.lb = json.it - 16 - json.st;	// estimated lower bound
                 json.ub = json.rt + 16 - json.st;	// estimated upper bound
 

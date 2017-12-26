@@ -43,12 +43,3 @@ npm run webpack
 
 # License
 [CC-BY-NC-SA-4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja)
-
-`src/reference` の `jst_clock.html` および `JST5.js` は [JST Clock](https://www.nict.go.jp/JST/JST5.html) のコピーとなります。
-「Copyright (C) 1998 - 2013 NICT, Hiroshi Toriyama, All Rights Reserved.」とあるのですが、ライセンスは書かれていません。
-これらは文字通り参考用に含めています。
-
-また、そちらから `fetch` / `calculate` / `errmsg` / `toggle` 関数を `src/time_offset.js` にコピペして、多少書き換えています。
-閏秒まわりの処理も入っているようなのですが、変には触ってないつもりです。
-`src/time_offset.js` に関するライセンスは [CC-BY-NC-SA-4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja) の対象外とし、
-ライセンス不明とします。
