@@ -8,8 +8,6 @@ class App {
     constructor() {
         this.time_offset = new TimeOffset();
         this.timer = new SalmonrunTimeTimer(this.time_offset);
-
-        document.getElementById("toggle_time_offset_information").addEventListener( "click", this.toggle_jst_detail.bind(this) );
     }
     calc_eta() {
         this.list = this.timer.listup_next_STT();
@@ -54,12 +52,6 @@ class App {
             interval = 50;
         }
         setTimeout(this.update.bind(this), interval);
-    }
-    toggle_jst_detail() {
-        var msgbox = document.getElementById("jst_detail");
-        if ( msgbox == null ) return;
-        if( msgbox.style.display == "block" ) msgbox.style.display = "none"
-        else msgbox.style.display = "block";
     }
 }
 

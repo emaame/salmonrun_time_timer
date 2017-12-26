@@ -21,11 +21,17 @@ NICT のサーバへの負荷を減らすためロード時に一回だけ時刻
 # Install to local
 ```
 git clone https://github.com/emaame/salmonrun_time_timer.git
-npm install
 ```
 
+`docs` フォルダ以下が必要なファイルになります。
+
 # Build
-`npm run webpack`
+ビルドには [Node.js](https://nodejs.org/ja/) をいれてね。その上で、以下を実行。
+
+```
+npm install
+npm run webpack
+```
 
 `src/*.js` are packed to `docs/bundle.js`.
 
