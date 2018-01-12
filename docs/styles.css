@@ -393,7 +393,17 @@ a {
     margin-left: 12px;
     padding-bottom: 24px;
   }
-  
+
+.stt-content section.stt-section {
+  padding-left: 12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+.stt-content section.stt-section p {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
 .stt-card-container {
 }
 
