@@ -29,7 +29,7 @@ class App {
             } else {
                 textOffset = "+" + date_formatter.getMinText(new Date( this.time_offset.offset));
             }
-            elmOffset.innerHTML = "補正 " + textOffset;
+            elmOffset.innerHTML = textOffset + " を補正しました。";
         } else {
             elmOffset.innerHTML = "時刻合わせ中 ...";
         }
