@@ -76,7 +76,7 @@ class App {
     load_mode5T() {
         const mode5T = localStorage["mode_5T"];
         // localStorage には文字列で格納されている
-        this.elmMode5T.checked = (mode5T == 'false' || mode5T == false) ? false : true;
+        this.elmMode5T.checked = (mode5T == 'undefined' || mode5T === undefined || mode5T == 'false' || mode5T == false) ? false : true;
         this.on_change_mode5T();
 
     }
