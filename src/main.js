@@ -45,7 +45,7 @@ class App {
                 textOffset = "+" + date_formatter.getMinText(new Date(this.time_offset.offset_jst));
             }
             if (this.time_offset.offset_5T != 0) {
-                textOffset += "-2sec";
+                textOffset += " - 2秒";
             }
             this.elmOffset.innerHTML = textOffset + " を補正済";
         } else {
