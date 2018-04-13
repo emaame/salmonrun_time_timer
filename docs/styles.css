@@ -26,7 +26,9 @@ a img{
 a {
   color: #bf360c;
 }
-
+.mdl-mini-footer__link-list a {
+  color: #bf360c;
+}
 ::-moz-selection {
   background-color: #E84F01;
   color: #fff;
