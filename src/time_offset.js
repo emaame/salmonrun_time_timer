@@ -8,27 +8,31 @@ var ServerList = [
 import getJSON from "get-json-data";
 
 class TimeOffset {
-    constructor() {
-        this.offset = 0;
-        this.get_offset();
+    constructor(offset_5T = 0) {
+        this.offset_jst = 0;
+        this.set_offset_5T(offset_5T);
+        this.get_offset_jst();
     }
 
     get_time(date = Date.now()) {
-        if (this.offset) {
-            return new Date(date + this.offset);
-        } else {
-            return new Date(date);
-        }
+        var offset = 0;
+        if (this.offset_jst) { offset += this.offset_jst; }
+        if (this.offset_5T ) { offset += this.offset_5T ; }
+        return new Date(date + offset);
     }
     
-    get_offset() {
+    set_offset_5T(offset_5T) {
+        this.offset_5T = offset_5T;
+    }
+
+    get_offset_jst() {
         this.results = new Array();
         const server_no = Math.floor(Math.random() * 3);
         const server_addr = ServerList[server_no];
         // ランダムで一つのサーバにアクセスすれば十分
         getJSON(server_addr + "?" + ( (new Date()).getTime() / 1000 ), (err, json) => {
             if (err) {
-                console.log(String(err));
+                //console.log(String(err));
                 return;
             }
             var now = new Date();	 		// Receive time
@@ -40,7 +44,7 @@ class TimeOffset {
                 json.ub = json.rt + 16 - json.st;	// estimated upper bound
 
                 // 詰まるところ必要なのは中央の修正値だけ
-                this.offset = - ( json.lb + json.ub ) / 2;
+                this.offset_jst = - ( json.lb + json.ub ) / 2;
             }
         });
     }

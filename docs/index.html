@@ -27,7 +27,7 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
     <link rel="stylesheet" href="styles.css">
     <script src="./bundle.js"></script>
@@ -40,28 +40,38 @@
             <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
                 <header class="section__play-btn mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--1-col-phone mdl-color--deep-orange-900 mdl-color-text--white">
                 </header>
-                <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-color--grey-800">
+                <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-color--grey-800" id="eta_area">
                     <div class="mdl-card__supporting-text">
-                        <label for="eta" class="mdl-typography--headline mdl-color-text--grey-600">サーモンランタイムまで</label>
+                        <label for="eta" id="eta_label" class="mdl-typography--headline mdl-color-text--grey-600">サーモンランタイムまで</label>
                         <p id="eta" class="mdl-typography--display-4 mdl-color-text--grey-200"></p>
                         <p id="offset" class="mdl-typography--headline mdl-color-text--grey-600"></p>
                     </div>
                 </div>
             </section>
 
+            <section class="section--center mdl-grid mdl-grid--no-spacing mdl-color-text--grey-200 stt-section">
+                <input type="checkbox" id="mode_5T">
+                <label for="mode_5T" id="mode_5T_label">2秒遅れモード(5T用)</label>
+            </section>
+
             <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp mdl-color-text--grey-200 stt-section">
                 <a name="about"></a>
-                <p><strong class="mdl-typography--headline">カウント０でバイトに参加。<br /></strong>
-                   NICTのサービスを利用して時刻合わせしています。<br />
-                   <!--（<a href="https://www.nict.go.jp/JST/JST5.html">JST Clock</a>と同じ仕組み）-->
-                「ホーム画面に追加」でアプリライクに。便利だね！</p>
+                <p>
+                    <strong class="mdl-typography--headline">カウント０でバイトに参加。
+                        <br />
+                    </strong>
+                    NICTのサービスを利用して時刻合わせしています。
+                    <br />
+                    <!--（<a href="https://www.nict.go.jp/JST/JST5.html">JST Clock</a>と同じ仕組み）-->
+                    「ホーム画面に追加」でアプリライクに。便利だね！</p>
             </section>
-            
-            <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp mdl-color-text--grey-200 stt-section">
+
+            <section class="section--center mdl-grid mdl-grid--no-spacing mdl-color-text--grey-200 stt-section">
                 <a name="wishlist"></a>
                 <p>気が向いたらポチってもらえると作者が喜びます。</p>
                 <p>
-                    <a href="http://steamcommunity.com/profiles/76561198102779564/wishlist/">steam</a> or <a href="https://www.amazon.co.jp/registry/wishlist/15WFFPUM9HF2L/ref=cm_sw_r_cp_ep_ws_uN5oAbHZCMJNZ">Amazon.co.jp</a>
+                    <a href="http://steamcommunity.com/profiles/76561198102779564/wishlist/">steam</a> or
+                    <a href="https://www.amazon.co.jp/registry/wishlist/15WFFPUM9HF2L/ref=cm_sw_r_cp_ep_ws_uN5oAbHZCMJNZ">Amazon.co.jp</a>
                 </p>
             </section>
 
@@ -83,10 +93,15 @@
             <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp mdl-color-text--grey-200 stt-section">
                 <a name="address"></a>
                 <address>
-                    <p>不具合などは <a href="https://twitter.com/emaame">@emaame</a> か <a href="https://github.com/emaame/salmonrun_time_timer/issues">Isuues</a> でお知らせ下さい。</p>
+                    <p>不具合などは
+                        <a href="https://twitter.com/emaame">@emaame</a> か
+                        <a href="https://github.com/emaame/salmonrun_time_timer/issues">Isuues</a> でお知らせ下さい。</p>
                 </address>
                 <p>本ページに関する @rayudne75 様へのお問い合わせはご遠慮下さい。</p>
-                <p><strong>サーモンランタイム</strong> については <a href="https://twitter.com/rayudne75/status/941699433623728129">@rayudne75 様 による 「#サーモンランタイム　草の根運動の内容告知」のツイート</a></p>
+                <p>
+                    <strong>サーモンランタイム</strong> については
+                    <a href="https://twitter.com/rayudne75/status/941699433623728129">@rayudne75 様 による 「#サーモンランタイム　草の根運動の内容告知」のツイート</a>
+                </p>
             </section>
             <section>
                 <a name="schedule"></a>

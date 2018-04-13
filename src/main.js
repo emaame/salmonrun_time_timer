@@ -8,6 +8,15 @@ class App {
     constructor() {
         this.time_offset = new TimeOffset();
         this.timer = new SalmonrunTimeTimer(this.time_offset);
+
+        this.elmEta = document.getElementById("eta");
+        this.elmMode5T = document.getElementById("mode_5T");
+        this.elmEtaArea = document.getElementById("eta_area");
+        this.elmEtaLabel = document.getElementById("eta_label");
+        this.elmOffset = document.getElementById("offset");
+
+        this.load_mode5T();
+        this.elmMode5T.onclick = this.on_change_mode5T.bind(this);
     }
     calc_eta() {
         this.list = this.timer.listup_next_STT();
@@ -17,45 +26,92 @@ class App {
     }
     update_eta() {
         // eta
-        const elmEta = document.getElementById("eta");
         const textEta = date_formatter.getMinText(this.eta);
-        elmEta.innerHTML = textEta;
-        // offset
-        const elmOffset = document.getElementById("offset");
-        if (this.time_offset.offset) {
+        this.elmEta.innerHTML = textEta;
+        // show label
+
+        let labelText = 'サーモンランタイム';
+        if (this.time_offset.offset_5T != 0) {
+            labelText += '(5T)';
+        }
+        labelText += 'まで';
+        this.elmEtaLabel.innerHTML = labelText;
+        // show offset text
+        if (this.time_offset.offset_jst) {
             var textOffset;
-            if (this.time_offset.offset < 0) {
-                textOffset = "-" + date_formatter.getMinText(new Date(-this.time_offset.offset));
+            if (this.time_offset.offset_jst < 0) {
+                textOffset = "-" + date_formatter.getMinText(new Date(-this.time_offset.offset_jst));
             } else {
-                textOffset = "+" + date_formatter.getMinText(new Date( this.time_offset.offset));
+                textOffset = "+" + date_formatter.getMinText(new Date(this.time_offset.offset_jst));
             }
-            elmOffset.innerHTML = textOffset + " を補正しました。";
+            if (this.time_offset.offset_5T != 0) {
+                textOffset += " - 2sec (5T)";
+            }
+            this.elmOffset.innerHTML = textOffset + " を補正済";
         } else {
-            elmOffset.innerHTML = "時刻合わせ中 ...";
+            this.elmOffset.innerHTML = "時刻合わせ中 ...";
         }
     }
     update_list() {
         // list
-        for(let i in this.list) {
+        for (let i in this.list) {
             const elmSTT = document.getElementById("stt-item-" + (Number(i) + 1));
             const textSTT = date_formatter.getMonthText(this.list[i]);
             elmSTT.innerHTML = textSTT;
         }
     }
-    update() {
+    update(loop = false) {
         this.calc_eta();
         this.update_eta();
         this.update_list();
 
-        var interval = 1000;
-        if (this.eta < 60*1000) {
-            interval = 50;
+        if (loop) {
+            var interval = 1000;
+            if (this.eta < 60 * 1000) {
+                interval = 50;
+            }
+            setTimeout(this.update.bind(this, true), interval);
         }
-        setTimeout(this.update.bind(this), interval);
+    }
+    load_mode5T() {
+        const mode5T = localStorage["mode_5T"];
+        // localStorage には文字列で格納されている
+        this.elmMode5T.checked = (mode5T == 'false' || mode5T == false) ? false : true;
+        this.on_change_mode5T();
+
+    }
+    on_change_mode5T() {
+        const classForNornalModeBack = 'mdl-color--grey-800';
+        const classFor5TModeBack = 'mdl-color--green-900';
+        const classForNornalModeFore = 'mdl-color-text--grey-600';
+        const classFor5TModeFore = 'mdl-color-text--yellow-600';
+
+        const mode5T = this.elmMode5T.checked;
+        this.elmEtaArea.classList.remove(classForNornalModeBack);
+        this.elmEtaArea.classList.remove(classFor5TModeBack);
+
+        this.elmEtaLabel.classList.remove(classForNornalModeFore);
+        this.elmEtaLabel.classList.remove(classFor5TModeFore);
+        this.elmOffset.classList.remove(classForNornalModeFore);
+        this.elmOffset.classList.remove(classFor5TModeFore);
+        if (mode5T) {
+            this.time_offset.set_offset_5T(-2 * 1000);
+            this.elmEtaArea.classList.add(classFor5TModeBack);
+            this.elmEtaLabel.classList.add(classFor5TModeFore);
+            this.elmOffset.classList.add(classFor5TModeFore);
+            
+        } else {
+            this.time_offset.set_offset_5T(0);
+            this.elmEtaArea.classList.add(classForNornalModeBack);
+            this.elmEtaLabel.classList.add(classForNornalModeFore);
+            this.elmOffset.classList.add(classForNornalModeFore);
+        }
+        localStorage["mode_5T"] = mode5T;
+        this.update(false);
     }
 }
 
 window.onload = () => {
     var app = new App();
-    app.update();
+    app.update(true);
 };

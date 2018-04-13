@@ -4,6 +4,9 @@ A web-based countdown Timer for Salmon Run Time.
 # Usage
 [サーモンランタイム タイマー](https://emaame.github.io/salmonrun_time_timer/) にアクセスするだけ！
 
+# 5Tモード追加しました
+2秒遅れモードです。MDL の Switch にしたかったのですが、うまくいきませんでした。
+
 # サーモンランタイムって？
 
 [@rayudne75](https://github.com/emaame/splatnet2statink) 様、提唱の草の根運動です。
