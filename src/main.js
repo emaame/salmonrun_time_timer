@@ -10,13 +10,13 @@ class App {
         this.timer = new SalmonrunTimeTimer(this.time_offset);
 
         this.elmEta = document.getElementById("eta");
-        this.elmMode5T = document.getElementById("mode_5T");
+        this.elmModeFriend = document.getElementById("mode_friend");
         this.elmEtaArea = document.getElementById("eta_area");
         this.elmEtaLabel = document.getElementById("eta_label");
         this.elmOffset = document.getElementById("offset");
 
-        this.load_mode5T();
-        this.elmMode5T.onclick = this.on_change_mode5T.bind(this);
+        this.load_modeFriend();
+        this.elmModeFriend.onclick = this.on_change_modeFriend.bind(this);
     }
     calc_eta() {
         this.list = this.timer.listup_next_STT();
@@ -30,9 +30,9 @@ class App {
         this.elmEta.innerHTML = textEta;
         // show label
 
-        let labelText = 'サーモンランタイム';
-        if (this.time_offset.offset_5T != 0) {
-            labelText += '(5T)';
+        let labelText = 'ST';
+        if (this.time_offset.offset_friend != 0) {
+            labelText += '(フレ部屋)';
         }
         labelText += 'まで';
         this.elmEtaLabel.innerHTML = labelText;
@@ -44,10 +44,11 @@ class App {
             } else {
                 textOffset = "+" + date_formatter.getMinText(new Date(this.time_offset.offset_jst));
             }
-            if (this.time_offset.offset_5T != 0) {
-                textOffset += " - 2秒";
+            textOffset += " を補正";
+            if (this.time_offset.offset_friend != 0) {
+                textOffset += " (2秒遅れ)";
             }
-            this.elmOffset.innerHTML = textOffset + " を補正済";
+            this.elmOffset.innerHTML = textOffset;
         } else {
             this.elmOffset.innerHTML = "時刻合わせ中 ...";
         }
@@ -73,40 +74,40 @@ class App {
             setTimeout(this.update.bind(this, true), interval);
         }
     }
-    load_mode5T() {
-        const mode5T = localStorage["mode_5T"];
+    load_modeFriend() {
+        const modeFriend = localStorage["mode_friend"];
         // localStorage には文字列で格納されている
-        this.elmMode5T.checked = (mode5T == 'true' || mode5T == true) ? true : false;
-        this.on_change_mode5T();
+        this.elmModeFriend.checked = (modeFriend == 'true' || modeFriend == true) ? true : false;
+        this.on_change_modeFriend();
 
     }
-    on_change_mode5T() {
+    on_change_modeFriend() {
         const classForNornalModeBack = 'mdl-color--grey-800';
-        const classFor5TModeBack = 'mdl-color--green-900';
+        const classForFriendModeBack = 'mdl-color--green-900';
         const classForNornalModeFore = 'mdl-color-text--grey-600';
-        const classFor5TModeFore = 'mdl-color-text--yellow-600';
+        const classForFriendModeFore = 'mdl-color-text--yellow-600';
 
-        const mode5T = this.elmMode5T.checked;
+        const modeFriend = this.elmModeFriend.checked;
         this.elmEtaArea.classList.remove(classForNornalModeBack);
-        this.elmEtaArea.classList.remove(classFor5TModeBack);
+        this.elmEtaArea.classList.remove(classForFriendModeBack);
 
         this.elmEtaLabel.classList.remove(classForNornalModeFore);
-        this.elmEtaLabel.classList.remove(classFor5TModeFore);
+        this.elmEtaLabel.classList.remove(classForFriendModeFore);
         this.elmOffset.classList.remove(classForNornalModeFore);
-        this.elmOffset.classList.remove(classFor5TModeFore);
-        if (mode5T) {
-            this.time_offset.set_offset_5T(-2 * 1000);
-            this.elmEtaArea.classList.add(classFor5TModeBack);
-            this.elmEtaLabel.classList.add(classFor5TModeFore);
-            this.elmOffset.classList.add(classFor5TModeFore);
+        this.elmOffset.classList.remove(classForFriendModeFore);
+        if (modeFriend) {
+            this.time_offset.set_offset_friend(-2 * 1000);
+            this.elmEtaArea.classList.add(classForFriendModeBack);
+            this.elmEtaLabel.classList.add(classForFriendModeFore);
+            this.elmOffset.classList.add(classForFriendModeFore);
             
         } else {
-            this.time_offset.set_offset_5T(0);
+            this.time_offset.set_offset_friend(0);
             this.elmEtaArea.classList.add(classForNornalModeBack);
             this.elmEtaLabel.classList.add(classForNornalModeFore);
             this.elmOffset.classList.add(classForNornalModeFore);
         }
-        localStorage["mode_5T"] = mode5T;
+        localStorage["mode_friend"] = modeFriend;
         this.update(false);
     }
 }

@@ -8,21 +8,21 @@ var ServerList = [
 import getJSON from "get-json-data";
 
 class TimeOffset {
-    constructor(offset_5T = 0) {
+    constructor(offset_friend = 0) {
         this.offset_jst = 0;
-        this.set_offset_5T(offset_5T);
+        this.set_offset_friend(offset_friend);
         this.get_offset_jst();
     }
 
     get_time(date = Date.now()) {
         var offset = 0;
         if (this.offset_jst) { offset += this.offset_jst; }
-        if (this.offset_5T ) { offset += this.offset_5T ; }
+        if (this.offset_friend ) { offset += this.offset_friend ; }
         return new Date(date + offset);
     }
     
-    set_offset_5T(offset_5T) {
-        this.offset_5T = offset_5T;
+    set_offset_friend(offset_friend) {
+        this.offset_friend = offset_friend;
     }
 
     get_offset_jst() {
