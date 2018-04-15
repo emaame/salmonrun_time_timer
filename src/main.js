@@ -38,13 +38,12 @@ class App {
         this.elmEtaLabel.innerHTML = labelText;
         // show offset text
         if (this.time_offset.offset_jst) {
-            var textOffset;
+            var textOffset = '補正: ';
             if (this.time_offset.offset_jst < 0) {
-                textOffset = "-" + date_formatter.getMinText(new Date(-this.time_offset.offset_jst));
+                textOffset += "-" + date_formatter.getMinText(new Date(-this.time_offset.offset_jst));
             } else {
-                textOffset = "+" + date_formatter.getMinText(new Date(this.time_offset.offset_jst));
+                textOffset += "+" + date_formatter.getMinText(new Date(this.time_offset.offset_jst));
             }
-            textOffset += " を補正";
             if (this.time_offset.offset_friend != 0) {
                 textOffset += " (2秒遅れ)";
             }
