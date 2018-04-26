@@ -479,6 +479,16 @@ a {
   cursor: pointer;
 }
 
+@media (max-width:360px) {
+  .stt-mobile-time {
+    font-size: 70px;
+  }
+}
+@media (min-width:361px) and (max-width:900px) {
+  .stt-mobile-time {
+    font-size: 84px;
+  }
+}
 
 /**** Mobile layout ****/
 @media (max-width: 900px) {
@@ -496,10 +506,6 @@ a {
     left: calc(50% - 70px);
     top: 12px;
     transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .stt-mobile-time {
-    font-size: 84px;
   }
 
   /* WebViews in iOS 9 break the "~" operator, and WebViews in OS X 10.10 break
