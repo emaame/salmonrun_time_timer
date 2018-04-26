@@ -499,7 +499,7 @@ a {
   }
 
   .stt-mobile-time {
-    font-size: 84px;
+    font-size: 22vw;
   }
 
   /* WebViews in iOS 9 break the "~" operator, and WebViews in OS X 10.10 break
