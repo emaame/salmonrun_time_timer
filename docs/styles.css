@@ -405,6 +405,9 @@ a {
   margin-top: 4px;
   margin-bottom: 4px;
 }
+.stt-content section.stt-section .st-matsuri p {
+  margin-left: 3em;
+}
 
 .stt-card-container {
 }
