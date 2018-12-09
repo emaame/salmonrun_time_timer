@@ -405,9 +405,29 @@ a {
   margin-top: 4px;
   margin-bottom: 4px;
 }
-.stt-content section.stt-section .st-matsuri p {
-  margin-left: 3em;
+
+.st-matsuri {
+
 }
+  .st-matsuri h4 {
+    margin-left: 0.4em;
+  }
+.st-matsuri a {
+    color: #1a237e;
+  }
+  .st-matsuri .mdl-mini-footer__link-list a {
+    color: #1a237e;
+  }
+  .st-matsuri ::-moz-selection {
+    background-color: #1a237e;
+    color: #fff;
+  }
+
+  .st-matsuri ::selection {
+    background-color: #1a237e;
+    color: #fff;
+  }
+
 
 .stt-card-container {
 }
