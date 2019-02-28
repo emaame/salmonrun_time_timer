@@ -11,17 +11,22 @@ class App {
         this.timer = new SalmonrunTimeTimer(this.time_offset);
         this.config = new Config(this.on_load.bind(this), {
             "mode_friend": {"type": Boolean, "default": false},
+            "mode_frequency_update": {"type": Boolean, "default": false},
         });
 
         this.elmEta = document.getElementById("eta");
-        this.elmModeFriend = document.getElementById("mode_friend");
         this.elmEtaArea = document.getElementById("eta_area");
         this.elmEtaLabel = document.getElementById("eta_label");
         this.elmOffset = document.getElementById("offset");
 
-        this.config.load();
+        this.elmModeFriend = document.getElementById("mode_friend");
         this.elmModeFriend.onclick = this.on_change_modeFriend.bind(this);
 
+        this.elmModeFrequencyUpdate= document.getElementById("mode_frequency_update");
+        this.elmModeFrequencyUpdate.onclick = this.on_change_modeFrequencyUpdate.bind(this);
+
+        this.config.load();
+        this.update(true);
 
     }
     calc_eta() {
@@ -71,17 +76,23 @@ class App {
         this.update_eta();
         this.update_list();
 
+        const modeFrequencyUpdate = this.config["mode_frequency_update"];
+
         if (loop) {
+            if (this.timeout) {
+                clearTimeout(this.timeout);
+            }
             var interval = 1000;
-            if (this.eta < 60 * 1000) {
+            if (modeFrequencyUpdate || this.eta < 60 * 1000) {
                 interval = 50;
             }
-            setTimeout(this.update.bind(this, true), interval);
+            this.timeout = setTimeout(this.update.bind(this, true), interval);
         }
     }
     on_load(config) {
         this.elmModeFriend.checked = config["mode_friend"];
         this.on_change_modeFriend();
+        this.on_change_modeFrequencyUpdate();
 
     }
     on_change_modeFriend() {
@@ -111,14 +122,17 @@ class App {
             this.elmOffset.classList.add(classForNornalModeFore);
         }
         
-        const partial = {"mode_friend": modeFriend};
-        this.config.save(partial);
+        this.config.save({"mode_friend": modeFriend});
         
         this.update(false);
+    }
+    on_change_modeFrequencyUpdate() {
+        const modeFrequencyUpdate = this.elmModeFrequencyUpdate.checked;
+        this.config.save({"mode_frequency_update": modeFrequencyUpdate});
+        this.update(true);
     }
 }
 
 window.onload = () => {
     var app = new App();
-    app.update(true);
 };

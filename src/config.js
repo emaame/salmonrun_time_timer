@@ -46,6 +46,7 @@ class Config {
             Object.keys(partial).forEach(key => {
                 //console.log(localStorage[key] );
                 localStorage[key] = partial[key];
+                this[key] = partial[key];
                 //console.log(key );
                 //console.log(localStorage[key] );
             });
