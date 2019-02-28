@@ -1,6 +1,7 @@
 import SalmonrunTimeTimer from "./salmonrun_time_timer";
 import DateFormatter from "./date_formatter";
 import TimeOffset from "./time_offset";
+import Config from "./config";
 
 const date_formatter = new DateFormatter();
 
@@ -8,6 +9,9 @@ class App {
     constructor() {
         this.time_offset = new TimeOffset();
         this.timer = new SalmonrunTimeTimer(this.time_offset);
+        this.config = new Config(this.on_load.bind(this), {
+            "mode_friend": {"type": Boolean, "default": false},
+        });
 
         this.elmEta = document.getElementById("eta");
         this.elmModeFriend = document.getElementById("mode_friend");
@@ -15,8 +19,10 @@ class App {
         this.elmEtaLabel = document.getElementById("eta_label");
         this.elmOffset = document.getElementById("offset");
 
-        this.load_modeFriend();
+        this.config.load();
         this.elmModeFriend.onclick = this.on_change_modeFriend.bind(this);
+
+
     }
     calc_eta() {
         this.list = this.timer.listup_next_STT();
@@ -73,10 +79,8 @@ class App {
             setTimeout(this.update.bind(this, true), interval);
         }
     }
-    load_modeFriend() {
-        const modeFriend = localStorage["mode_friend"];
-        // localStorage には文字列で格納されている
-        this.elmModeFriend.checked = (modeFriend == 'true' || modeFriend == true) ? true : false;
+    on_load(config) {
+        this.elmModeFriend.checked = config["mode_friend"];
         this.on_change_modeFriend();
 
     }
@@ -106,7 +110,10 @@ class App {
             this.elmEtaLabel.classList.add(classForNornalModeFore);
             this.elmOffset.classList.add(classForNornalModeFore);
         }
-        localStorage["mode_friend"] = modeFriend;
+        
+        const partial = {"mode_friend": modeFriend};
+        this.config.save(partial);
+        
         this.update(false);
     }
 }
