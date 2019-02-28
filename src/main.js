@@ -91,6 +91,7 @@ class App {
     }
     on_load(config) {
         this.elmModeFriend.checked = config["mode_friend"];
+        this.elmModeFrequencyUpdate.checked = config["mode_frequency_update"];
         this.on_change_modeFriend();
         this.on_change_modeFrequencyUpdate();
 

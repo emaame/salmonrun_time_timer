@@ -9,33 +9,23 @@ class Config {
         const scheme = this.scheme;
         Object.keys(this.scheme).forEach(key => {
             const info = this.scheme[key];
-            //console.log(this)
             const type = info["type"];
-            const def  = info["default"];
 
             var value = localStorage[key];
-            if (value == undefined || value == null) {
-                value = def;
+            if (value === undefined || value === null) {
+                value = info["default"];
             }
 
-            switch(type) {
-                case Boolean:
-                {
-                    this[key] = (value == 'true' || value == true) ? true : false;
-                    break;
-                }
-                case Number:
-                {
-                    this[key] = Number(value);
-                    break;
-                }
-                case String:
-                {
-                    this[key] = String(value);
-                    break;
-                }
+            if (type === Boolean) {
+                this[key] = (value == 'true' || value == true) ? true : false;
+            } else if (type === Number) {
+                this[key] = Number(value);
+            } else if (type === String) {
+                this[key] = String(value);
+            } else {
+                this[key] = value;
             }
-        });
+        }, this);
         
         if (this.listener) {
             this.listener(this);
@@ -44,18 +34,12 @@ class Config {
     save(partial=undefined) {
         if (partial) {
             Object.keys(partial).forEach(key => {
-                //console.log(localStorage[key] );
                 localStorage[key] = partial[key];
                 this[key] = partial[key];
-                //console.log(key );
-                //console.log(localStorage[key] );
             });
         } else {
             Object.keys(this.scheme).forEach(key => {
-                //console.log(localStorage[key] );
                 localStorage[key] = this[key];
-                //console.log(key );
-                //console.log(localStorage[key] );
             });
         }
     }
