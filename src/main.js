@@ -9,7 +9,7 @@ class App {
     constructor() {
         this.time_offset = new TimeOffset();
         this.timer = new SalmonrunTimeTimer(this.time_offset);
-        this.config = new Config(this.on_load.bind(this), {
+        this.config = new Config({
             "mode_friend": {"type": Boolean, "default": false},
             "mode_frequency_update": {"type": Boolean, "default": false},
         });
@@ -26,6 +26,8 @@ class App {
         this.elmModeFrequencyUpdate.onclick = this.on_change_modeFrequencyUpdate.bind(this);
 
         this.config.load();
+        this.on_load();
+
         this.update(true);
 
     }
@@ -49,14 +51,15 @@ class App {
         this.elmEtaLabel.innerHTML = labelText;
         // show offset text
         if (this.time_offset.offset_jst) {
-            var textOffset = '補正: ';
+            var textOffset = '';
             if (this.time_offset.offset_jst < 0) {
                 textOffset += "-" + date_formatter.getMinText(new Date(-this.time_offset.offset_jst));
             } else {
                 textOffset += "+" + date_formatter.getMinText(new Date(this.time_offset.offset_jst));
             }
+            textOffset += ' を補正済み';
             if (this.time_offset.offset_friend != 0) {
-                textOffset += " (2秒遅れ)";
+                textOffset += " (更に2秒遅れ中)";
             }
             this.elmOffset.innerHTML = textOffset;
         } else {
@@ -89,9 +92,9 @@ class App {
             this.timeout = setTimeout(this.update.bind(this, true), interval);
         }
     }
-    on_load(config) {
-        this.elmModeFriend.checked = config["mode_friend"];
-        this.elmModeFrequencyUpdate.checked = config["mode_frequency_update"];
+    on_load() {
+        this.elmModeFriend.checked = this.config["mode_friend"];
+        this.elmModeFrequencyUpdate.checked = this.config["mode_frequency_update"];
         this.on_change_modeFriend();
         this.on_change_modeFrequencyUpdate();
 

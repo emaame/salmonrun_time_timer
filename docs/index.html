@@ -45,7 +45,6 @@
                     <div class="mdl-card__supporting-text">
                         <label for="eta" id="eta_label" class="mdl-typography--headline mdl-color-text--grey-600">STまで</label>
                         <p id="eta" class="mdl-typography--display-4 mdl-color-text--grey-200 stt-mobile-time"></p>
-                        <p id="offset" class="mdl-typography--headline mdl-color-text--grey-600"></p>
                     </div>
                 </div>
             </section>
@@ -57,13 +56,11 @@
                         <br />
                     </strong>
                     <a href="https://www.nict.go.jp/JST/JST5.html">NICT</a> のサービスで時刻を合わせてます。
-                    <br />
                     <!--（<a href="https://www.nict.go.jp/JST/JST5.html">JST Clock</a>と同じ仕組み）-->
-                    「ホーム画面に追加」でアプリライクに。<br />
-                    <a href="https://youtu.be/OZBOlu-uEB0">動画での簡単な説明</a>
+                    <br />
+                    <span id="offset" class=""></span>
                 </p>
             </section>
-
             <section class="section--center mdl-grid mdl-grid--no-spacing mdl-color-text--grey-200 stt-section">
                 <input type="checkbox" id="mode_friend">
                 <label for="mode_friend" id="mode_friend_label">2秒遅れ(フレ部屋)モード</label>
@@ -71,6 +68,17 @@
             <section class="section--center mdl-grid mdl-grid--no-spacing mdl-color-text--grey-200 stt-section">
                 <input type="checkbox" id="mode_frequency_update">
                 <label for="mode_frequency_update" id="mode_frequency_update_label">常に細かく更新する</label>
+            </section>
+
+            <section class="section--center mdl-grid mdl-grid--no-spacing mdl-color-text--grey-200 stt-section">
+                <p>
+                    <a href="https://youtu.be/OZBOlu-uEB0">動画での使い方の説明</a>
+                </p>
+            </section>
+            <section class="section--center mdl-grid mdl-grid--no-spacing mdl-color-text--grey-200 stt-section">
+                <p>
+                    更に「ホーム画面に追加」でアプリライク
+                </p>
             </section>
 
 <!--

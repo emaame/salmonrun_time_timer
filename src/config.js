@@ -1,8 +1,7 @@
 
 
 class Config {
-    constructor(listener, scheme) {
-        this.listener = listener;
+    constructor(scheme) {
         this.scheme = scheme;
     }
     load() {
@@ -26,10 +25,6 @@ class Config {
                 this[key] = value;
             }
         }, this);
-        
-        if (this.listener) {
-            this.listener(this);
-        }
     }
     save(partial=undefined) {
         if (partial) {
