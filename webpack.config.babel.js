@@ -26,7 +26,7 @@ export default {
     open: true,
     port: 8888,
   },
-  devtool: 'inline-source-map',
+  //devtool: 'inline-source-map',
   optimization: {
     minimize: true,
   },
