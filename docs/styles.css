@@ -589,10 +589,6 @@ a {
   .stt-footer .mdl-mega-footer--bottom-section {
     display: none;
   }
-
-  #eta_container .mdl-card {
-    min-height: 180px;
-  }
 }
 
 
