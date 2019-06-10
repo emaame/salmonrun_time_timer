@@ -2,7 +2,7 @@ const webpack = require("webpack");
 import path from 'path'
 
 export default {
-  mode: 'development',
+  mode: 'production',
   context: path.resolve(__dirname, 'src'),
   entry: './main.js',
   output: {
