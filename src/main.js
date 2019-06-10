@@ -20,7 +20,7 @@ class App {
         this.config = new Config({
             KEY_MODE_FRIEND: { "type": Boolean, "default": false },
             KEY_MODE_FRIQUENCY_UPDATE: { "type": Boolean, "default": false },
-            KEY_USE_SOUND: { "type": Boolean, "default": true },
+            KEY_USE_SOUND: { "type": Boolean, "default": false },
         });
 
         this.elmEta = document.getElementById("eta");
@@ -170,9 +170,11 @@ class App {
     }
     on_change_useSound() {
         this.useSound = this.elmUseSound.checked;
-        this.config.save({ KEY_USE_SOUND: this.useSound });
+        this.config.save({ KEY_USE_SOUND: false });
         this.update(false);
+        /* Safari / Chrome などの制限として、初回はイベント経由でならさないといけない */
         if (this.useSound) {
+            this.sound.loadAll();
             this.sound.play(6);
             return;
         }

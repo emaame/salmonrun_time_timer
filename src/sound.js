@@ -18,7 +18,6 @@ class Sound {
             this.noAudioContext = true;
             this.fallbackAudio = document.createElement('audio');
         }
-        this.loadAll();
     }
 
     loadAll() {
