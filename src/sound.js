@@ -9,7 +9,7 @@ class Sound {
         this.buffers = new Array(this.soundURLs.length);
         this.playing = new Array(this.soundURLs.length, false)
 
-        this.audioCtx = (window.AudioContext || window.webkitAudioContext);
+        this.audioContext = (window.AudioContext || window.webkitAudioContext);
         this.noAudioContext = false;
         this.fallbackAudio;
     }
@@ -54,8 +54,8 @@ class Sound {
     }
 
     _load(index) {
-        if (this.audioCtx !== undefined) {
-            this.audioCtx = new this.audioCtx();
+        if (this.audioContext !== undefined) {
+            this.audioCtx = new this.audioContext();
         } else {
             this.noAudioContext = true;
             this.fallbackAudio = document.createElement('audio');
