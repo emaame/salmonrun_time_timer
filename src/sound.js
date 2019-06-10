@@ -4,7 +4,7 @@
 
 class Sound {
     constructor() {
-        this.soundURLs = ['/sounds/5.wav', '/sounds/4.wav', '/sounds/3.wav', '/sounds/2.wav', '/sounds/1.wav', '/sounds/10.wav'];
+        this.soundURLs = ['/sounds/1.wav', '/sounds/2.wav', '/sounds/3.wav', '/sounds/4.wav', '/sounds/5.wav', '/sounds/10.wav', '/sounds/quite-impressed.mp3'];
         this.sources = new Array(this.soundURLs.length);
         this.buffers = new Array(this.soundURLs.length);
         this.playing = new Array(this.soundURLs.length, false)

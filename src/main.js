@@ -62,7 +62,7 @@ class App {
             if (eta_ms < value) {
                 this.sound.play(index);
                 /* 次回の再生タイミングを予約 */
-                const next_trigger_index = (index <= 0) ? this.sound_triggers.length : index - 1;
+                const next_trigger_index = (index <= 0) ? this.sound_triggers.length - 2 : index - 1;
                 this.least_sound_trigger = this.sound_triggers[next_trigger_index];
                 return;
             }
@@ -172,6 +172,10 @@ class App {
         this.useSound = this.elmUseSound.checked;
         this.config.save({ KEY_USE_SOUND: this.useSound });
         this.update(false);
+        if (this.useSound) {
+            this.sound.play(6);
+            return;
+        }
     }
 }
 
