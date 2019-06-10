@@ -19,6 +19,7 @@ class App {
     constructor() {
         this.sound = new Sound();
         this.sound_triggers = [1, 2, 3, 4, 5, 10].map((sec) => sec * 1000);
+        this.played_min = false;
         this.least_sound_trigger = this.sound_triggers[this.sound_triggers.length - 1];
         this.time_offset = new TimeOffset();
         this.timer = new SalmonrunTimeTimer(this.time_offset);
@@ -30,21 +31,27 @@ class App {
         this.elmOffset = document.getElementById("offset");
 
         this.elmModeFriend = document.getElementById(KEY_MODE_FRIEND);
-        this.elmModeFriend.onclick = this.on_change_modeFriend.bind(this);
+        this.elmModeFriend.addEventListener("click", this.on_change_modeFriend.bind(this));
 
         this.elmModeFrequencyUpdate = document.getElementById(KEY_MODE_FRIQUENCY_UPDATE);
-        this.elmModeFrequencyUpdate.onclick = this.on_change_modeFrequencyUpdate.bind(this);
+        this.elmModeFrequencyUpdate.addEventListener("click", this.on_change_modeFrequencyUpdate.bind(this));
 
         this.elmUseSound = document.getElementById(KEY_USE_SOUND);
-        this.elmUseSound.onclick = this.on_change_useSound.bind(this);
+        this.elmUseSound.addEventListener("click", this.on_change_useSound.bind(this));
+        this.elmLabelUseSound = document.getElementById(KEY_USE_SOUND + "_label");
+        /* iOS のサウンド再生の制限を解除する無音再生を仕込んでおく */
+        let disabled_restriction_callback = e => {
+            this.sound.playSilent();
+            this.elmLabelUseSound.innerHTML = "サウンド再生（制限解除済み）";
+            this.elmLabelUseSound.classList.remove("mdl-color-text--red-A700");
+        };
+        document.addEventListener("click", disabled_restriction_callback);
+        document.addEventListener("touchend", disabled_restriction_callback);
 
         this.config.load();
-
-        console.log(this.config[KEY_MODE_FRIQUENCY_UPDATE]);
         this.on_load();
 
         this.update(true);
-
     }
     calc_eta() {
         this.list = this.timer.listup_next_STT();
@@ -55,21 +62,20 @@ class App {
     }
 
     notify_sound(eta_ms) {
-        if (!this.useSound) {
-            return;
-        }
+        if (!this.useSound) { return; }
         if (eta_ms > this.least_sound_trigger) {
+            this.played_min = false;
             return;
         }
-        this.sound_triggers.forEach((value, index, array) => {
-            if (eta_ms < value) {
-                this.sound.play(index);
-                /* 次回の再生タイミングを予約 */
-                const next_trigger_index = (index <= 0) ? this.sound_triggers.length - 2 : index - 1;
-                this.least_sound_trigger = this.sound_triggers[next_trigger_index];
-                return;
-            }
-        })
+        if (this.played_min) { return; }
+        const index = this.sound_triggers.findIndex(trigger_ms => eta_ms < trigger_ms);
+        this.sound.play(index);
+        /* 1 を再生後、巻き戻すが、巻き戻したことを記憶しておかないといけない。 */
+        this.played_min = (index <= 0);
+        /* 次のサウンドに移動する。末尾（this.sound_triggers.length - 1）は通知音なので len-2 */
+        const next_trigger_index = this.played_min ? this.sound_triggers.length - 2 : index - 1;
+        console.log(next_trigger_index);
+        this.least_sound_trigger = this.sound_triggers[next_trigger_index];
     }
     update_eta() {
         // eta
@@ -129,7 +135,6 @@ class App {
     on_load() {
         this.elmModeFriend.checked = this.config[KEY_MODE_FRIEND];
         this.elmModeFrequencyUpdate.checked = this.config[KEY_MODE_FRIQUENCY_UPDATE];
-        console.log(this.elmModeFrequencyUpdate.checked);
         this.elmUseSound.checked = this.config[KEY_USE_SOUND];
         this.on_change_modeFriend();
         this.on_change_useSound();
@@ -174,7 +179,7 @@ class App {
     }
     on_change_useSound() {
         this.useSound = this.elmUseSound.checked;
-        this.config.save(KEY_USE_SOUND, false);
+        this.config.save(KEY_USE_SOUND, this.useSound);
         this.update(false);
         /* Safari / Chrome などの制限として、初回はイベント経由でならさないといけない */
         if (this.useSound) {

@@ -12,6 +12,13 @@ class Sound {
         this.audioContext = (window.AudioContext || window.webkitAudioContext);
         this.noAudioContext = false;
         this.fallbackAudio;
+        if (this.audioContext !== undefined) {
+            this.audioCtx = new this.audioContext();
+        } else {
+            this.noAudioContext = true;
+            this.fallbackAudio = document.createElement('audio');
+        }
+
     }
 
     loadAll() {
@@ -23,8 +30,17 @@ class Sound {
                 })));
     }
 
+    playSilent() {
+        this.audioCtx.resume();
+        const buf = this.audioCtx.createBuffer(1, 1, 22050);
+        const src = this.audioCtx.createBufferSource();
+        src.buffer = buf;
+        src.connect(this.audioCtx.destination);
+        src.start(0);
+    }
+
     play(index) {
-        this._load(index).then(buffer => {
+        return this._load(index).then(buffer => {
             if (this.noAudioContext) {
                 this.fallbackAudio.currentTime = 0;
                 this.fallbackAudio.play();
@@ -54,13 +70,6 @@ class Sound {
     }
 
     _load(index) {
-        if (this.audioContext !== undefined) {
-            this.audioCtx = new this.audioContext();
-        } else {
-            this.noAudioContext = true;
-            this.fallbackAudio = document.createElement('audio');
-        }
-
         const url = this.soundURLs[index];
         if (this.noAudioContext) {
             this.fallbackAudio.src = url;
