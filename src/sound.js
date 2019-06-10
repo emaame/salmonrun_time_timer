@@ -25,9 +25,9 @@ class Sound {
 
     play(index) {
         this._load(index).then(buffer => {
-            if (noAudioContext) {
-                fallbackAudio.currentTime = 0;
-                fallbackAudio.play();
+            if (this.noAudioContext) {
+                this.fallbackAudio.currentTime = 0;
+                this.fallbackAudio.play();
                 return;
             }
             this.audioCtx.resume();
