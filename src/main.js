@@ -10,6 +10,11 @@ const KEY_MODE_FRIEND = "mode_friend";
 const KEY_MODE_FRIQUENCY_UPDATE = "mode_frequency_update";
 const KEY_USE_SOUND = "use_sound";
 
+const CONFIG_PARAM = {};
+CONFIG_PARAM[KEY_MODE_FRIEND] = { "type": Boolean, "default": false };
+CONFIG_PARAM[KEY_MODE_FRIQUENCY_UPDATE] = { "type": Boolean, "default": false };
+CONFIG_PARAM[KEY_USE_SOUND] = { "type": Boolean, "default": false };
+
 class App {
     constructor() {
         this.sound = new Sound();
@@ -17,11 +22,7 @@ class App {
         this.least_sound_trigger = this.sound_triggers[this.sound_triggers.length - 1];
         this.time_offset = new TimeOffset();
         this.timer = new SalmonrunTimeTimer(this.time_offset);
-        this.config = new Config({
-            KEY_MODE_FRIEND: { "type": Boolean, "default": false },
-            KEY_MODE_FRIQUENCY_UPDATE: { "type": Boolean, "default": false },
-            KEY_USE_SOUND: { "type": Boolean, "default": false },
-        });
+        this.config = new Config(CONFIG_PARAM);
 
         this.elmEta = document.getElementById("eta");
         this.elmEtaArea = document.getElementById("eta_area");
@@ -38,6 +39,8 @@ class App {
         this.elmUseSound.onclick = this.on_change_useSound.bind(this);
 
         this.config.load();
+
+        console.log(this.config[KEY_MODE_FRIQUENCY_UPDATE]);
         this.on_load();
 
         this.update(true);
@@ -126,6 +129,7 @@ class App {
     on_load() {
         this.elmModeFriend.checked = this.config[KEY_MODE_FRIEND];
         this.elmModeFrequencyUpdate.checked = this.config[KEY_MODE_FRIQUENCY_UPDATE];
+        console.log(this.elmModeFrequencyUpdate.checked);
         this.elmUseSound.checked = this.config[KEY_USE_SOUND];
         this.on_change_modeFriend();
         this.on_change_useSound();
@@ -159,18 +163,18 @@ class App {
             this.elmOffset.classList.add(classForNornalModeFore);
         }
 
-        this.config.save({ KEY_MODE_FRIEND: modeFriend });
+        this.config.save(KEY_MODE_FRIEND, modeFriend);
 
         this.update(false);
     }
     on_change_modeFrequencyUpdate() {
         const modeFrequencyUpdate = this.elmModeFrequencyUpdate.checked;
-        this.config.save({ KEY_MODE_FRIQUENCY_UPDATE: modeFrequencyUpdate });
+        this.config.save(KEY_MODE_FRIQUENCY_UPDATE, modeFrequencyUpdate);
         this.update(true);
     }
     on_change_useSound() {
         this.useSound = this.elmUseSound.checked;
-        this.config.save({ KEY_USE_SOUND: false });
+        this.config.save(KEY_USE_SOUND, false);
         this.update(false);
         /* Safari / Chrome などの制限として、初回はイベント経由でならさないといけない */
         if (this.useSound) {

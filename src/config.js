@@ -26,17 +26,9 @@ class Config {
             }
         }, this);
     }
-    save(partial=undefined) {
-        if (partial) {
-            Object.keys(partial).forEach(key => {
-                localStorage[key] = partial[key];
-                this[key] = partial[key];
-            });
-        } else {
-            Object.keys(this.scheme).forEach(key => {
-                localStorage[key] = this[key];
-            });
-        }
+    save(key, value) {
+        localStorage[key] = value;
+        this[key] = value;
     }
 }
 
