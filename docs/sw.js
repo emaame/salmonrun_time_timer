@@ -1,8 +1,8 @@
-const version = "1.2.2";
-const cacheName = `salmonrun_time_timer-${version}`;
+const VERSION = "1.2.3";
+const CACHE_NAME = `salmonrun_time_timer-${VERSION}`;
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(cacheName).then(cache => {
+    caches.open(CACHE_NAME).then(cache => {
       return cache.addAll([
         `./`,
         `./index.html`,
@@ -28,7 +28,7 @@ self.addEventListener('activate', function(evt) {
     caches.keys().then(function(keys) {
           var promises = [];
           keys.forEach(function(cacheName) {
-            if (cacheName != STATIC_CACHE_NAME)
+            if (cacheName != CACHE_NAME)
               promises.push(caches.delete(cacheName));
           });
           return Promise.all(promises);
@@ -37,7 +37,7 @@ self.addEventListener('activate', function(evt) {
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.open(cacheName)
+    caches.open(CACHE_NAME)
       .then(cache => cache.match(event.request, {ignoreSearch: true}))
       .then(response => {
       return response || fetch(event.request);
