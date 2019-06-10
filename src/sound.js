@@ -4,7 +4,7 @@
 
 class Sound {
     constructor() {
-        this.soundURLs = ['1.wav', '2.wav', '3.wav', '4.wav', '5.wav', '10.wav', 'quite-impressed.mp3'].map(fname => './sounds/' + fname);
+        this.soundURLs = ['1.wav', '2.wav', '3.wav', '4.wav', '5.wav', '10.wav', '30.wav', 'quite-impressed.mp3'].map(fname => './sounds/' + fname);
         this.sources = new Array(this.soundURLs.length);
         this.buffers = new Array(this.soundURLs.length);
         this.playing = new Array(this.soundURLs.length, false)

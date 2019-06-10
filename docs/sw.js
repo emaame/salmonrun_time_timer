@@ -15,6 +15,7 @@ self.addEventListener('install', e => {
         `./sounds/4.wav`,
         `./sounds/5.wav`,
         `./sounds/10.wav`,
+        `./sounds/30.wav`,
         `./sounds/quite-impressed.mp3`,
       ])
           .then(() => self.skipWaiting());

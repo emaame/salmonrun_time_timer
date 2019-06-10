@@ -18,7 +18,7 @@ CONFIG_PARAM[KEY_USE_SOUND] = { "type": Boolean, "default": false };
 class App {
     constructor() {
         this.sound = new Sound();
-        this.sound_triggers = [1, 2, 3, 4, 5, 10].map((sec) => sec * 1000);
+        this.sound_triggers = [1, 2, 3, 4, 5, 10, 30].map((sec) => sec * 1000);
         this.played_min = false;
         this.least_sound_trigger = this.sound_triggers[this.sound_triggers.length - 1];
         this.time_offset = new TimeOffset();
@@ -43,7 +43,7 @@ class App {
         let disabled_restriction_callback = e => {
             this.sound.playSilent();
             this.elmLabelUseSound.innerHTML = "サウンド再生（制限解除済み）";
-            this.elmLabelUseSound.classList.remove("mdl-color-text--red-A700");
+            this.elmLabelUseSound.classList.remove("mdl-color-text--deep-orange-900");
         };
         document.addEventListener("click", disabled_restriction_callback);
         document.addEventListener("touchend", disabled_restriction_callback);
@@ -184,7 +184,7 @@ class App {
         /* Safari / Chrome などの制限として、初回はイベント経由でならさないといけない */
         if (this.useSound) {
             this.sound.loadAll();
-            this.sound.play(6);
+            this.sound.play(7);
             return;
         }
     }

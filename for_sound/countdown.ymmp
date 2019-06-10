@@ -342,6 +342,63 @@
       </JimakuSetting>
       <FaceSetting />
     </CommonItem>
+    <CommonItem xsi:type="VoiceItem">
+      <DoubleTimelineX>7978</DoubleTimelineX>
+      <TimelineY>0</TimelineY>
+      <DoubleItemEnd>1500</DoubleItemEnd>
+      <HeadColor>
+        <A>255</A>
+        <R>85</R>
+        <G>0</G>
+        <B>0</B>
+        <ScA>1</ScA>
+        <ScR>0.09084171</ScR>
+        <ScG>0</ScG>
+        <ScB>0</ScB>
+      </HeadColor>
+      <FootColor>
+        <A>255</A>
+        <R>213</R>
+        <G>0</G>
+        <B>0</B>
+        <ScA>1</ScA>
+        <ScR>0.6653873</ScR>
+        <ScG>0</ScG>
+        <ScB>0</ScB>
+      </FootColor>
+      <CharacterName>ゆっくり霊夢</CharacterName>
+      <Serihu>30秒前</Serihu>
+      <Hatsuon>&lt;NUMK VAL=30&gt;+びょー/ま'え。</Hatsuon>
+      <Speed>80</Speed>
+      <FadeOut>0.5</FadeOut>
+      <DoubleVoiceInterval>200</DoubleVoiceInterval>
+      <JimakuSetting>
+        <DrawY>320</DrawY>
+        <Font>Splatfont 2</Font>
+        <Size>60</Size>
+        <TextColor>
+          <A>255</A>
+          <R>255</R>
+          <G>255</G>
+          <B>255</B>
+          <ScA>1</ScA>
+          <ScR>1</ScR>
+          <ScG>1</ScG>
+          <ScB>1</ScB>
+        </TextColor>
+        <StyleColor>
+          <A>255</A>
+          <R>0</R>
+          <G>0</G>
+          <B>0</B>
+          <ScA>1</ScA>
+          <ScR>0</ScR>
+          <ScG>0</ScG>
+          <ScB>0</ScB>
+        </StyleColor>
+      </JimakuSetting>
+      <FaceSetting />
+    </CommonItem>
   </TimelineItems>
   <COBaseItems>
     <KeyValueOfCharacterSettingObservableCollectionOfCommonItem>
