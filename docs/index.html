@@ -38,18 +38,23 @@
         <div class="stt-content mdl-layout__content">
             <a name="top"></a>
             <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp" id="eta_container">
-                <header class="section__play-btn mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--hide-phone mdl-color--deep-orange-900 mdl-color-text--white">
+                <header
+                    class="section__play-btn mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--hide-phone mdl-color--deep-orange-900 mdl-color-text--white">
                 </header>
-                <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-color--grey-800" id="eta_area">
+                <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-color--grey-800"
+                    id="eta_area">
                     <div class="mdl-card__supporting-text">
-                        <label for="eta" id="eta_label" class="mdl-typography--headline mdl-color-text--grey-600">STまで</label><br />
-                        <span id="eta" class="mdl-typography--display-4 mdl-color-text--grey-200 stt-mobile-time"></span><br />
+                        <label for="eta" id="eta_label"
+                            class="mdl-typography--headline mdl-color-text--grey-600">STまで</label><br />
+                        <span id="eta"
+                            class="mdl-typography--display-4 mdl-color-text--grey-200 stt-mobile-time"></span><br />
                         <span id="offset" class="mdl-typography--headline"></span>
                     </div>
                 </div>
             </section>
 
-            <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp mdl-color-text--grey-200 stt-section">
+            <section
+                class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp mdl-color-text--grey-300 stt-section">
                 <a name="about"></a>
                 <p>
                     <strong class="mdl-typography--headline">カウント０でバイトに参加
@@ -69,6 +74,10 @@
                     <input type="checkbox" id="mode_frequency_update">
                     <label for="mode_frequency_update" id="mode_frequency_update_label">常に細かく更新する</label>
                 </div>
+                <div>
+                    <input type="checkbox" id="use_sound">
+                    <label for="use_sound" id="use_sound_label">サウンドを使用する</label>
+                </div>
             </section>
 
             <section class="section--center mdl-color-text--grey-200 stt-section mdl-color--grey-900">
@@ -80,7 +89,7 @@
                 </p>
             </section>
 
-<!--
+            <!--
             <section class="section--center mdl-grid mdl-grid--no-spacing stt-section">
                 <a name="info"></a>
                 <div class="stt-card-container mdl-grid">
@@ -205,7 +214,17 @@
             </section>
         </div>
     </div>
-
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js', { scope: '/' })
+                .then(function (registration) {
+                    console.log('Service Worker Registered');
+                });
+            navigator.serviceWorker.ready.then(function (registration) {
+                console.log('Service Worker Ready');
+            });
+        }
+    </script>
 </body>
 
 </html>
