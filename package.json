@@ -23,7 +23,7 @@
   "scripts": {
     "webpack": "webpack --config webpack.config.babel.js",
     "mocha": "mocha --compilers js:babel-core/register",
-    "serve": "webpack-dev-server  --host 192.168.1.4",
+    "serve": "webpack-dev-server",
     "test": "mocha --watch --require babel-core/register ./test"
   },
   "repository": {
