@@ -23,8 +23,16 @@ self.addEventListener('install', e => {
   );
 });
 
-self.addEventListener('activate', event => {
-  event.waitUntil(self.clients.claim());
+self.addEventListener('activate', function(evt) {
+  evt.waitUntil(
+    caches.keys().then(function(keys) {
+          var promises = [];
+          keys.forEach(function(cacheName) {
+            if (cacheName != STATIC_CACHE_NAME)
+              promises.push(caches.delete(cacheName));
+          });
+          return Promise.all(promises);
+        }));
 });
 
 self.addEventListener('fetch', event => {
