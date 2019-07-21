@@ -1,7 +1,7 @@
 const webpack = require("webpack");
-import path from 'path'
+const path = require('path');
 
-export default {
+let config = {
   mode: 'production',
   context: path.resolve(__dirname, 'src'),
   entry: './main.js',
@@ -31,3 +31,5 @@ export default {
     minimize: true,
   },
 }
+
+module.exports = config;
