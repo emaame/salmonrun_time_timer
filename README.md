@@ -45,4 +45,4 @@ npm run webpack
 `npm run test`
 
 # License
-[CC-BY-NC-SA-4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja)
+[CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/deed.ja)
