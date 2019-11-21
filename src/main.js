@@ -149,11 +149,13 @@ class App {
         const modeFrequencyUpdate = this.config[KEY_MODE_FRIQUENCY_UPDATE];
 
         const interval = (modeFrequencyUpdate || this.eta < 60 * 1000) ? 50 : 1000;
-        if (loop == false || pasted > interval) {
+        if (!loop || pasted > interval) {
             this.calc_eta();
             this.update_eta();
             this.update_list();
-            this.last_time = time;
+            if (pasted > interval) {
+                this.last_time = time;
+            }
         }
         if (loop) {
             requestAnimationFrame(this.update.bind(this, true));
