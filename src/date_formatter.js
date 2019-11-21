@@ -33,7 +33,7 @@ class DateFormatter {
         } else {
             if (SSS > 0) {
                 ss += 1;
-                if (ss > 60) {
+                if (ss >= 60) {
                     ss -= 60;
                     mm += 1;
                 }
