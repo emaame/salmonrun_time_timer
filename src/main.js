@@ -8,12 +8,36 @@ const date_formatter = new DateFormatter();
 
 const KEY_MODE_FRIEND = "mode_friend";
 const KEY_MODE_FRIQUENCY_UPDATE = "mode_frequency_update";
+const KEY_MODE_SHOW_MS = "mode_show_ms";
 const KEY_USE_SOUND = "use_sound";
 
 const CONFIG_PARAM = {};
 CONFIG_PARAM[KEY_MODE_FRIEND] = { "type": Boolean, "default": false };
 CONFIG_PARAM[KEY_MODE_FRIQUENCY_UPDATE] = { "type": Boolean, "default": false };
+CONFIG_PARAM[KEY_MODE_SHOW_MS] = { "type": Boolean, "default": false };
 CONFIG_PARAM[KEY_USE_SOUND] = { "type": Boolean, "default": false };
+
+// polyfill など含めてこちらを参照した
+// http://yomotsu.net/blog/2013/01/05/fps.html
+const now = window.performance && (
+    performance.now ||
+    performance.mozNow ||
+    performance.msNow ||
+    performance.oNow ||
+    performance.webkitNow);
+function getTime() {
+    return (now && now.call(performance)) || (new Date().getTime());
+}
+const requestAnimationFrame = (function () {
+    return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function (callback) {
+            window.setTimeout(callback, 1000.0 / 60.0);
+        };
+})();
 
 class App {
     constructor() {
@@ -24,6 +48,7 @@ class App {
         this.time_offset = new TimeOffset();
         this.timer = new SalmonrunTimeTimer(this.time_offset);
         this.config = new Config(CONFIG_PARAM);
+        this.last_time = getTime();
 
         this.elmEta = document.getElementById("eta");
         this.elmEtaArea = document.getElementById("eta_area");
@@ -35,6 +60,9 @@ class App {
 
         this.elmModeFrequencyUpdate = document.getElementById(KEY_MODE_FRIQUENCY_UPDATE);
         this.elmModeFrequencyUpdate.addEventListener("click", this.on_change_modeFrequencyUpdate.bind(this));
+
+        this.elmModeShowMS = document.getElementById(KEY_MODE_SHOW_MS);
+        this.elmModeShowMS.addEventListener("click", this.on_change_modeShowMS.bind(this));
 
         this.elmUseSound = document.getElementById(KEY_USE_SOUND);
         this.elmUseSound.addEventListener("click", this.on_change_useSound.bind(this));
@@ -79,7 +107,8 @@ class App {
     }
     update_eta() {
         // eta
-        const textEta = date_formatter.getMinText(this.eta);
+        const modeShowMS = this.config[KEY_MODE_SHOW_MS];
+        const textEta = date_formatter.getMinText(this.eta, modeShowMS);
         this.elmEta.innerHTML = textEta;
         // show label
 
@@ -115,21 +144,19 @@ class App {
         }
     }
     update(loop = false) {
-        this.calc_eta();
-        this.update_eta();
-        this.update_list();
-
+        const time = getTime();
+        const pasted = time - this.last_time;
         const modeFrequencyUpdate = this.config[KEY_MODE_FRIQUENCY_UPDATE];
 
+        const interval = (modeFrequencyUpdate || this.eta < 60 * 1000) ? 50 : 1000;
+        if (loop == false || pasted > interval) {
+            this.calc_eta();
+            this.update_eta();
+            this.update_list();
+            this.last_time = time;
+        }
         if (loop) {
-            if (this.timeout) {
-                clearTimeout(this.timeout);
-            }
-            var interval = 1000;
-            if (modeFrequencyUpdate || this.eta < 60 * 1000) {
-                interval = 50;
-            }
-            this.timeout = setTimeout(this.update.bind(this, true), interval);
+            requestAnimationFrame(this.update.bind(this, true));
         }
     }
     on_load() {
@@ -175,6 +202,11 @@ class App {
     on_change_modeFrequencyUpdate() {
         const modeFrequencyUpdate = this.elmModeFrequencyUpdate.checked;
         this.config.save(KEY_MODE_FRIQUENCY_UPDATE, modeFrequencyUpdate);
+        this.update(true);
+    }
+    on_change_modeShowMS() {
+        const modeShowMS = this.elmModeShowMS.checked;
+        this.config.save(KEY_MODE_SHOW_MS, modeShowMS);
         this.update(true);
     }
     on_change_useSound() {
