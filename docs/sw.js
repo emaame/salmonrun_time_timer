@@ -1,4 +1,4 @@
-const VERSION = "1.2.3";
+const VERSION = "1.3.0";
 const CACHE_NAME = `salmonrun_time_timer-${VERSION}`;
 self.addEventListener('install', e => {
   e.waitUntil(
@@ -18,29 +18,29 @@ self.addEventListener('install', e => {
         `./sounds/30.wav`,
         `./sounds/quite-impressed.mp3`,
       ])
-          .then(() => self.skipWaiting());
+        .then(() => self.skipWaiting());
     })
   );
 });
 
-self.addEventListener('activate', function(evt) {
+self.addEventListener('activate', function (evt) {
   evt.waitUntil(
-    caches.keys().then(function(keys) {
-          var promises = [];
-          keys.forEach(function(cacheName) {
-            if (cacheName != CACHE_NAME)
-              promises.push(caches.delete(cacheName));
-          });
-          return Promise.all(promises);
-        }));
+    caches.keys().then(function (keys) {
+      var promises = [];
+      keys.forEach(function (cacheName) {
+        if (cacheName != CACHE_NAME)
+          promises.push(caches.delete(cacheName));
+      });
+      return Promise.all(promises);
+    }));
 });
 
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.open(CACHE_NAME)
-      .then(cache => cache.match(event.request, {ignoreSearch: true}))
+      .then(cache => cache.match(event.request, { ignoreSearch: true }))
       .then(response => {
-      return response || fetch(event.request);
-    })
+        return response || fetch(event.request);
+      })
   );
 });
