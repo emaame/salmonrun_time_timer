@@ -21,16 +21,25 @@ class DateFormatter {
     getMinText(d, showMS = true) {
         var mm = d.getMinutes();
         var ss = d.getSeconds();
+        var SSS = d.getMilliseconds();
 
-        if (mm < 10) mm = "0" + mm;
-        if (ss < 10) ss = "0" + ss;
         if (showMS) {
-            var SSS = d.getMilliseconds();
+            if (mm < 10) mm = "0" + mm;
+            if (ss < 10) ss = "0" + ss;
             if (SSS < 10) { SSS = "00" + SSS; }
             else if (SSS < 100) { SSS = "0" + SSS; }
 
             return (mm + ":" + ss + "." + SSS);
         } else {
+            if (SSS > 0) {
+                ss += 1;
+                if (ss > 60) {
+                    ss -= 60;
+                    mm += 1;
+                }
+            }
+            if (mm < 10) mm = "0" + mm;
+            if (ss < 10) ss = "0" + ss;
             return (mm + ":" + ss);
         }
     }
