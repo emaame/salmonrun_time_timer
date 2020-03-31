@@ -7,20 +7,25 @@
     "get-json-data": "^0.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.7",
+    "npm-force-resolutions": "^0.0.3",
+    "@babel/core": "^7.9.0",
     "@babel/polyfill": "^7.8.7",
-    "@babel/preset-env": "^7.8.7",
-    "@babel/preset-react": "^7.8.3",
-    "@babel/register": "^7.8.6",
-    "babel-loader": "^8.0.6",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/register": "^7.9.0",
+    "babel-loader": "^8.1.0",
     "chai": "^4.2.0",
     "gh-pages": "^1.2.0",
-    "mocha": "^6.2.2",
-    "webpack": "^4.42.0",
+    "mocha": "^6.2.3",
+    "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
+  "resolutions": {
+    "minimist": ">=1.2.5"
+  },
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "webpack": "webpack --config webpack.config.babel.js",
     "mocha": "mocha --compilers js:babel-core/register",
     "serve": "webpack-dev-server",
