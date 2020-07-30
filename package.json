@@ -24,6 +24,7 @@
     "minimist": ">=1.2.5"
   },
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "webpack": "webpack --config webpack.config.babel.js",
     "mocha": "mocha --require @babel/register",
     "serve": "webpack-dev-server",
