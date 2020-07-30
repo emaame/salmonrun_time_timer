@@ -7,7 +7,6 @@
     "get-json-data": "^0.1.2"
   },
   "devDependencies": {
-    "npm-force-resolutions": "^0.0.3",
     "@babel/core": "^7.10.5",
     "@babel/polyfill": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
@@ -25,7 +24,6 @@
     "minimist": ">=1.2.5"
   },
   "scripts": {
-    "preinstall": "npx npm-force-resolutions",
     "webpack": "webpack --config webpack.config.babel.js",
     "mocha": "mocha --require @babel/register",
     "serve": "webpack-dev-server",

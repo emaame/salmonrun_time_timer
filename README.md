@@ -29,20 +29,20 @@ git clone https://github.com/emaame/salmonrun_time_timer.git
 `docs` フォルダ以下が必要なファイルになります。
 
 # Build
-ビルドには [Node.js](https://nodejs.org/ja/) をいれてね。その上で、以下を実行。
+ビルドには [Node.js](https://nodejs.org/ja/) と [Yarn](https://classic.yarnpkg.com/ja/docs/install/#windows-stable) を入れて
 
 ```
-npm install
-npm run webpack
+yarn
+yarn webpack
 ```
 
 `src/*.js` are packed to `docs/bundle.js`.
 
 # webpack-dev-server
-`npm run serve`
+`yarn serve`
 
 # Run test
-`npm run test`
+`yarn test`
 
 # License
 [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/deed.ja)
