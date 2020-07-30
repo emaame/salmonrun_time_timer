@@ -3279,6 +3279,11 @@ jsesc@~0.5.0:
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
   integrity sha1-597mbjXW/Bb3EP6R1c9p9w8IkR0=
 
+json-format@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/json-format/-/json-format-1.0.1.tgz#143f67e62af129d6bffed288a46265ea23d0df0c"
+  integrity sha1-FD9n5irxKda//tKIpGJl6iPQ3ww=
+
 json-parse-better-errors@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz#bb867cfb3450e69107c131d1c514bab3dc8bcaa9"
@@ -3549,7 +3554,7 @@ minimatch@3.0.4, minimatch@^3.0.4:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimist@^1.2.0, minimist@^1.2.5:
+minimist@>=1.2.5, minimist@^1.2.0, minimist@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
   integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
@@ -3758,6 +3763,14 @@ normalize-url@^1.0.0:
     prepend-http "^1.0.0"
     query-string "^4.1.0"
     sort-keys "^1.0.0"
+
+npm-force-resolutions@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/npm-force-resolutions/-/npm-force-resolutions-0.0.3.tgz#955c8cb476cd949e94b19a2e5828b589397cdb24"
+  integrity sha512-xbIPAGzD3nrJHDLtnRFt/O83teTA8ju5pWTf8W6OKL4D0XD9EjdRNJhzg4bSXWuucE+l1HGdTpOJR/l1Mi1Ycg==
+  dependencies:
+    json-format "^1.0.1"
+    source-map-support "^0.5.5"
 
 npm-run-path@^2.0.0:
   version "2.0.2"
@@ -4679,7 +4692,7 @@ source-map-resolve@^0.5.0:
     source-map-url "^0.4.0"
     urix "^0.1.0"
 
-source-map-support@^0.5.16, source-map-support@~0.5.12:
+source-map-support@^0.5.16, source-map-support@^0.5.5, source-map-support@~0.5.12:
   version "0.5.19"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.19.tgz#a98b62f86dcaf4f67399648c085291ab9e8fed61"
   integrity sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==
