@@ -139,7 +139,7 @@ class App {
         // list
         for (let i in this.list) {
             const elmSTT = document.getElementById("stt-item-" + (Number(i) + 1));
-            const textSTT = date_formatter.getMonthText(this.list[i]);
+            const textSTT = date_formatter.getMonthTextInLocalTime(this.list[i]);
             elmSTT.innerHTML = textSTT;
         }
     }

@@ -1,8 +1,8 @@
 class DateFormatter {
-    constructor() {
-    }
+    constructor() {}
 
-    getMonthText(d) {
+    // こちらはローカルタイムを表示する
+    getMonthTextInLocalTime(d) {
         var MM = d.getMonth() + 1;
         var DD = d.getDate();
         if (MM < 10) MM = "0" + MM;
@@ -16,9 +16,12 @@ class DateFormatter {
         if (mm < 10) mm = "0" + mm;
         if (ss < 10) ss = "0" + ss;
 
-        return (MM + "/" + DD + " " + hh + ":" + mm + ":" + ss);
+        return MM + "/" + DD + " " + hh + ":" + mm + ":" + ss;
     }
-    getMinText(d, showMS = true) {
+
+    getRestTimeTextInUTC(d, showMS = true) {
+        // use UTC for 30-minutes / 45-minutes Timezones
+        // ST is based on JST (+9:00), so that there is no problem to calculate with UTC (+0:00).
         var mm = d.getUTCMinutes();
         var ss = d.getUTCSeconds();
         var SSS = d.getUTCMilliseconds();
@@ -26,10 +29,13 @@ class DateFormatter {
         if (showMS) {
             if (mm < 10) mm = "0" + mm;
             if (ss < 10) ss = "0" + ss;
-            if (SSS < 10) { SSS = "00" + SSS; }
-            else if (SSS < 100) { SSS = "0" + SSS; }
+            if (SSS < 10) {
+                SSS = "00" + SSS;
+            } else if (SSS < 100) {
+                SSS = "0" + SSS;
+            }
 
-            return (mm + ":" + ss + "." + SSS);
+            return mm + ":" + ss + "." + SSS;
         } else {
             if (SSS > 0) {
                 ss += 1;
@@ -40,7 +46,7 @@ class DateFormatter {
             }
             if (mm < 10) mm = "0" + mm;
             if (ss < 10) ss = "0" + ss;
-            return (mm + ":" + ss);
+            return mm + ":" + ss;
         }
     }
 }
