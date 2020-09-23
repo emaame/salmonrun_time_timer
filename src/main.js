@@ -12,31 +12,34 @@ const KEY_MODE_SHOW_MS = "mode_show_ms";
 const KEY_USE_SOUND = "use_sound";
 
 const CONFIG_PARAM = {};
-CONFIG_PARAM[KEY_MODE_FRIEND] = { "type": Boolean, "default": false };
-CONFIG_PARAM[KEY_MODE_FRIQUENCY_UPDATE] = { "type": Boolean, "default": false };
-CONFIG_PARAM[KEY_MODE_SHOW_MS] = { "type": Boolean, "default": false };
-CONFIG_PARAM[KEY_USE_SOUND] = { "type": Boolean, "default": false };
+CONFIG_PARAM[KEY_MODE_FRIEND] = { type: Boolean, default: false };
+CONFIG_PARAM[KEY_MODE_FRIQUENCY_UPDATE] = { type: Boolean, default: false };
+CONFIG_PARAM[KEY_MODE_SHOW_MS] = { type: Boolean, default: false };
+CONFIG_PARAM[KEY_USE_SOUND] = { type: Boolean, default: false };
 
 // polyfill など含めてこちらを参照した
 // http://yomotsu.net/blog/2013/01/05/fps.html
-const now = window.performance && (
-    performance.now ||
-    performance.mozNow ||
-    performance.msNow ||
-    performance.oNow ||
-    performance.webkitNow);
+const now =
+    window.performance &&
+    (performance.now ||
+        performance.mozNow ||
+        performance.msNow ||
+        performance.oNow ||
+        performance.webkitNow);
 function getTime() {
-    return (now && now.call(performance)) || (new Date().getTime());
+    return (now && now.call(performance)) || new Date().getTime();
 }
 const requestAnimationFrame = (function () {
-    return window.requestAnimationFrame ||
+    return (
+        window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
         window.mozRequestAnimationFrame ||
         window.oRequestAnimationFrame ||
         window.msRequestAnimationFrame ||
         function (callback) {
             window.setTimeout(callback, 1000.0 / 60.0);
-        };
+        }
+    );
 })();
 
 class App {
@@ -44,7 +47,9 @@ class App {
         this.sound = new Sound();
         this.sound_triggers = [1, 2, 3, 4, 5, 10, 30].map((sec) => sec * 1000);
         this.played_min = false;
-        this.least_sound_trigger = this.sound_triggers[this.sound_triggers.length - 1];
+        this.least_sound_trigger = this.sound_triggers[
+            this.sound_triggers.length - 1
+        ];
         this.time_offset = new TimeOffset();
         this.timer = new SalmonrunTimeTimer(this.time_offset);
         this.config = new Config(CONFIG_PARAM);
@@ -56,22 +61,40 @@ class App {
         this.elmOffset = document.getElementById("offset");
 
         this.elmModeFriend = document.getElementById(KEY_MODE_FRIEND);
-        this.elmModeFriend.addEventListener("click", this.on_change_modeFriend.bind(this));
+        this.elmModeFriend.addEventListener(
+            "click",
+            this.on_change_modeFriend.bind(this)
+        );
 
-        this.elmModeFrequencyUpdate = document.getElementById(KEY_MODE_FRIQUENCY_UPDATE);
-        this.elmModeFrequencyUpdate.addEventListener("click", this.on_change_modeFrequencyUpdate.bind(this));
+        this.elmModeFrequencyUpdate = document.getElementById(
+            KEY_MODE_FRIQUENCY_UPDATE
+        );
+        this.elmModeFrequencyUpdate.addEventListener(
+            "click",
+            this.on_change_modeFrequencyUpdate.bind(this)
+        );
 
         this.elmModeShowMS = document.getElementById(KEY_MODE_SHOW_MS);
-        this.elmModeShowMS.addEventListener("click", this.on_change_modeShowMS.bind(this));
+        this.elmModeShowMS.addEventListener(
+            "click",
+            this.on_change_modeShowMS.bind(this)
+        );
 
         this.elmUseSound = document.getElementById(KEY_USE_SOUND);
-        this.elmUseSound.addEventListener("click", this.on_change_useSound.bind(this));
-        this.elmLabelUseSound = document.getElementById(KEY_USE_SOUND + "_label");
+        this.elmUseSound.addEventListener(
+            "click",
+            this.on_change_useSound.bind(this)
+        );
+        this.elmLabelUseSound = document.getElementById(
+            KEY_USE_SOUND + "_label"
+        );
         /* iOS のサウンド再生の制限を解除する無音再生を仕込んでおく */
-        let disabled_restriction_callback = e => {
+        let disabled_restriction_callback = (e) => {
             this.sound.playSilent();
             this.elmLabelUseSound.innerHTML = "サウンド再生（制限解除済み）";
-            this.elmLabelUseSound.classList.remove("mdl-color-text--deep-orange-900");
+            this.elmLabelUseSound.classList.remove(
+                "mdl-color-text--deep-orange-900"
+            );
         };
         document.addEventListener("click", disabled_restriction_callback);
         document.addEventListener("touchend", disabled_restriction_callback);
@@ -90,43 +113,62 @@ class App {
     }
 
     notify_sound(eta_ms) {
-        if (!this.useSound) { return; }
+        if (!this.useSound) {
+            return;
+        }
         if (eta_ms > this.least_sound_trigger) {
             this.played_min = false;
             return;
         }
-        if (this.played_min) { return; }
-        const index = this.sound_triggers.findIndex(trigger_ms => eta_ms < trigger_ms);
+        if (this.played_min) {
+            return;
+        }
+        const index = this.sound_triggers.findIndex(
+            (trigger_ms) => eta_ms < trigger_ms
+        );
         this.sound.play(index);
         /* 1 を再生後、巻き戻すが、巻き戻したことを記憶しておかないといけない。 */
-        this.played_min = (index <= 0);
+        this.played_min = index <= 0;
         /* 次のサウンドに移動する。末尾（this.sound_triggers.length - 1）は通知音なので len-2 */
-        const next_trigger_index = this.played_min ? this.sound_triggers.length - 2 : index - 1;
+        const next_trigger_index = this.played_min
+            ? this.sound_triggers.length - 2
+            : index - 1;
         console.log(next_trigger_index);
         this.least_sound_trigger = this.sound_triggers[next_trigger_index];
     }
     update_eta() {
         // eta
         const modeShowMS = this.config[KEY_MODE_SHOW_MS];
-        const textEta = date_formatter.getMinText(this.eta, modeShowMS);
+        const textEta = date_formatter.getRestTimeTextInUTC(
+            this.eta,
+            modeShowMS
+        );
         this.elmEta.innerHTML = textEta;
         // show label
 
-        let labelText = 'ST';
+        let labelText = "ST";
         if (this.time_offset.offset_friend != 0) {
-            labelText += '(フレ部屋)';
+            labelText += "(フレ部屋)";
         }
-        labelText += 'まで';
+        labelText += "まで";
         this.elmEtaLabel.innerHTML = labelText;
         // show offset text
         if (this.time_offset.offset_jst) {
-            var textOffset = '';
+            var textOffset = "";
             if (this.time_offset.offset_jst < 0) {
-                textOffset += "-" + date_formatter.getMinText(new Date(-this.time_offset.offset_jst));
+                textOffset +=
+                    "-" +
+                    date_formatter.getRestTimeTextInUTC(
+                        new Date(-this.time_offset.offset_jst)
+                    );
             } else {
-                textOffset += "+" + date_formatter.getMinText(new Date(this.time_offset.offset_jst));
+                textOffset +=
+                    "+" +
+                    date_formatter.getRestTimeTextInUTC(
+                        new Date(this.time_offset.offset_jst)
+                    );
             }
-            textOffset += ' を補正済み';
+            textOffset += " を補正済み";
             if (this.time_offset.offset_friend != 0) {
                 textOffset += " (更に2秒遅れ中)";
             }
@@ -138,8 +180,12 @@ class App {
     update_list() {
         // list
         for (let i in this.list) {
-            const elmSTT = document.getElementById("stt-item-" + (Number(i) + 1));
-            const textSTT = date_formatter.getMonthTextInLocalTime(this.list[i]);
+            const elmSTT = document.getElementById(
+                "stt-item-" + (Number(i) + 1)
+            );
+            const textSTT = date_formatter.getMonthTextInLocalTime(
+                this.list[i]
+            );
             elmSTT.innerHTML = textSTT;
         }
     }
@@ -148,7 +194,8 @@ class App {
         const pasted = time - this.last_time;
         const modeFrequencyUpdate = this.config[KEY_MODE_FRIQUENCY_UPDATE];
 
-        const interval = (modeFrequencyUpdate || this.eta < 60 * 1000) ? 50 : 1000;
+        const interval =
+            modeFrequencyUpdate || this.eta < 60 * 1000 ? 50 : 1000;
         if (!loop || pasted > interval) {
             this.calc_eta();
             this.update_eta();
@@ -163,18 +210,19 @@ class App {
     }
     on_load() {
         this.elmModeFriend.checked = this.config[KEY_MODE_FRIEND];
-        this.elmModeFrequencyUpdate.checked = this.config[KEY_MODE_FRIQUENCY_UPDATE];
+        this.elmModeFrequencyUpdate.checked = this.config[
+            KEY_MODE_FRIQUENCY_UPDATE
+        ];
         this.elmUseSound.checked = this.config[KEY_USE_SOUND];
         this.on_change_modeFriend();
         this.on_change_useSound();
         this.on_change_modeFrequencyUpdate();
-
     }
     on_change_modeFriend() {
-        const classForNornalModeBack = 'mdl-color--grey-800';
-        const classForFriendModeBack = 'mdl-color--green-900';
-        const classForNornalModeFore = 'mdl-color-text--grey-600';
-        const classForFriendModeFore = 'mdl-color-text--yellow-600';
+        const classForNornalModeBack = "mdl-color--grey-800";
+        const classForFriendModeBack = "mdl-color--green-900";
+        const classForNornalModeFore = "mdl-color-text--grey-600";
+        const classForFriendModeFore = "mdl-color-text--yellow-600";
 
         const modeFriend = this.elmModeFriend.checked;
         this.elmEtaArea.classList.remove(classForNornalModeBack);
@@ -189,7 +237,6 @@ class App {
             this.elmEtaArea.classList.add(classForFriendModeBack);
             this.elmEtaLabel.classList.add(classForFriendModeFore);
             this.elmOffset.classList.add(classForFriendModeFore);
-
         } else {
             this.time_offset.set_offset_friend(0);
             this.elmEtaArea.classList.add(classForNornalModeBack);
