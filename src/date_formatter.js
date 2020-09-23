@@ -1,7 +1,7 @@
 class DateFormatter {
     constructor() {}
 
-    // こちらはローカルタイムを表示する
+    // use local-time for up-nexts
     getMonthTextInLocalTime(d) {
         var MM = d.getMonth() + 1;
         var DD = d.getDate();
