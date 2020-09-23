@@ -19,9 +19,9 @@ class DateFormatter {
         return (MM + "/" + DD + " " + hh + ":" + mm + ":" + ss);
     }
     getMinText(d, showMS = true) {
-        var mm = d.getMinutes();
-        var ss = d.getSeconds();
-        var SSS = d.getMilliseconds();
+        var mm = d.getUTCMinutes();
+        var ss = d.getUTCSeconds();
+        var SSS = d.getUTCMilliseconds();
 
         if (showMS) {
             if (mm < 10) mm = "0" + mm;
