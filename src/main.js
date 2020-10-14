@@ -1,21 +1,15 @@
 import SalmonrunTimeTimer from "./salmonrun_time_timer";
 import DateFormatter from "./date_formatter";
 import TimeOffset from "./time_offset";
-import Config from "./config";
+import Config, {
+    KEY_MODE_FRIEND,
+    KEY_MODE_FRIQUENCY_UPDATE,
+    KEY_MODE_SHOW_MS,
+    KEY_USE_SOUND,
+} from "./config";
 import Sound from "./sound";
 
 const date_formatter = new DateFormatter();
-
-const KEY_MODE_FRIEND = "mode_friend";
-const KEY_MODE_FRIQUENCY_UPDATE = "mode_frequency_update";
-const KEY_MODE_SHOW_MS = "mode_show_ms";
-const KEY_USE_SOUND = "use_sound";
-
-const CONFIG_PARAM = {};
-CONFIG_PARAM[KEY_MODE_FRIEND] = { type: Boolean, default: false };
-CONFIG_PARAM[KEY_MODE_FRIQUENCY_UPDATE] = { type: Boolean, default: false };
-CONFIG_PARAM[KEY_MODE_SHOW_MS] = { type: Boolean, default: false };
-CONFIG_PARAM[KEY_USE_SOUND] = { type: Boolean, default: false };
 
 // polyfill など含めてこちらを参照した
 // http://yomotsu.net/blog/2013/01/05/fps.html
@@ -51,8 +45,8 @@ class App {
             this.sound_triggers.length - 1
         ];
         this.time_offset = new TimeOffset();
+
         this.timer = new SalmonrunTimeTimer(this.time_offset);
-        this.config = new Config(CONFIG_PARAM);
         this.last_time = getTime();
 
         this.elmEta = document.getElementById("eta");
@@ -99,7 +93,6 @@ class App {
         document.addEventListener("click", disabled_restriction_callback);
         document.addEventListener("touchend", disabled_restriction_callback);
 
-        this.config.load();
         this.on_load();
 
         this.update(true);
@@ -138,7 +131,7 @@ class App {
     }
     update_eta() {
         // eta
-        const modeShowMS = this.config[KEY_MODE_SHOW_MS];
+        const modeShowMS = Config[KEY_MODE_SHOW_MS];
         const textEta = date_formatter.getRestTimeTextInUTC(
             this.eta,
             modeShowMS
@@ -192,7 +185,7 @@ class App {
     update(loop = false) {
         const time = getTime();
         const pasted = time - this.last_time;
-        const modeFrequencyUpdate = this.config[KEY_MODE_FRIQUENCY_UPDATE];
+        const modeFrequencyUpdate = Config[KEY_MODE_FRIQUENCY_UPDATE];
 
         const interval =
             modeFrequencyUpdate || this.eta < 60 * 1000 ? 50 : 1000;
@@ -209,11 +202,9 @@ class App {
         }
     }
     on_load() {
-        this.elmModeFriend.checked = this.config[KEY_MODE_FRIEND];
-        this.elmModeFrequencyUpdate.checked = this.config[
-            KEY_MODE_FRIQUENCY_UPDATE
-        ];
-        this.elmUseSound.checked = this.config[KEY_USE_SOUND];
+        this.elmModeFriend.checked = Config[KEY_MODE_FRIEND];
+        this.elmModeFrequencyUpdate.checked = Config[KEY_MODE_FRIQUENCY_UPDATE];
+        this.elmUseSound.checked = Config[KEY_USE_SOUND];
         this.on_change_modeFriend();
         this.on_change_useSound();
         this.on_change_modeFrequencyUpdate();
@@ -244,23 +235,23 @@ class App {
             this.elmOffset.classList.add(classForNornalModeFore);
         }
 
-        this.config.save(KEY_MODE_FRIEND, modeFriend);
+        Config.save(KEY_MODE_FRIEND, modeFriend);
 
         this.update(false);
     }
     on_change_modeFrequencyUpdate() {
         const modeFrequencyUpdate = this.elmModeFrequencyUpdate.checked;
-        this.config.save(KEY_MODE_FRIQUENCY_UPDATE, modeFrequencyUpdate);
+        Config.save(KEY_MODE_FRIQUENCY_UPDATE, modeFrequencyUpdate);
         this.update(true);
     }
     on_change_modeShowMS() {
         const modeShowMS = this.elmModeShowMS.checked;
-        this.config.save(KEY_MODE_SHOW_MS, modeShowMS);
+        Config.save(KEY_MODE_SHOW_MS, modeShowMS);
         this.update(true);
     }
     on_change_useSound() {
         this.useSound = this.elmUseSound.checked;
-        this.config.save(KEY_USE_SOUND, this.useSound);
+        Config.save(KEY_USE_SOUND, this.useSound);
         this.update(false);
         /* Safari / Chrome などの制限として、初回はイベント経由でならさないといけない */
         if (this.useSound) {
