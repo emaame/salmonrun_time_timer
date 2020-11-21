@@ -60,7 +60,8 @@
                     <strong class="mdl-typography--headline">カウント０でバイトに参加
                         <br />
                     </strong>
-                    <a href="https://www.nict.go.jp/JST/JST5.html">NICT</a> のサービスで時刻を合わせてます。
+                    <a href="https://docs.fastly.com/en/guides/understanding-the-xtimer-header">X-Timer ヘッダ</a> or
+                    <a href="https://www.nict.go.jp/JST/JST5.html">NICT</a>（終了予定） のサービスで時刻を合わせてます。
                     <br />
                 </p>
             </section>
@@ -221,7 +222,9 @@
     </div>
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js', { scope: './' })
+            navigator.serviceWorker.register('./sw.js', {
+                    scope: './'
+                })
                 .then(function (registration) {
                     console.log('Service Worker Registered');
                 });
