@@ -23,9 +23,7 @@ let config = {
         extensions: [".js"],
     },
     devServer: {
-        inline: true,
-        contentBase: path.resolve(__dirname, "docs"),
-        watchContentBase: true,
+        static: path.resolve(__dirname, "docs"),
         hot: true,
         open: true,
         port: 8888,
