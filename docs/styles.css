@@ -407,14 +407,33 @@ a {
 }
 
 .st-matsuri {
-
+  /*
+  background: url("./FFrnl1TVUAAK6kg.jpg");
+  background-size: contain;
+  */
+  width: 330px;
+  min-height: 200px;
 }
-  .st-matsuri h4 {
-    margin-left: 0.4em;
+  .st-matsuri .header {
+    padding: 16px;
   }
-.st-matsuri a {
+  .st-matsuri .header h3 {
+    font-size: 20px;
+    line-height: 48px;
+    margin: auto 0;
+    text-align: center;
+  }
+  .st-matsuri .header h4 {
+    font-size: 18px;
+    margin: 0;
+    text-align: center;
+  }
+  .st-matsuri a {
     color: #1a237e;
     font-weight: bold;
+  }
+  .st-matsuri dt {
+    padding: 5px;
   }
   .st-matsuri .mdl-mini-footer__link-list a {
     color: #1a237e;
@@ -423,12 +442,14 @@ a {
     background-color: #1a237e;
     color: #fff;
   }
+  .st-matsuri .info {
+    padding: 16px;
+  }
 
   .st-matsuri ::selection {
     background-color: #1a237e;
     color: #fff;
   }
-
 
 .stt-card-container {
 }
