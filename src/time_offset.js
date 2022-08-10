@@ -1,14 +1,6 @@
 import getJSON from "get-json-data";
 import Config, { KEY_TIMEOFFSET, KEY_TIMEOFFSET_UPDATED_AT } from "./config";
 
-// based on https://www.nict.go.jp/JST/JST5.js
-
-var ServerList = [
-    "https://ntp-a1.nict.go.jp/cgi-bin/json",
-    "https://ntp-b1.nict.go.jp/cgi-bin/json",
-    "https://ntp-a4.nict.go.jp/cgi-bin/json",
-];
-
 // cache を使う時間
 const THRESHOLD_TIME_UPDATE_IN_MS = 2 * 60 * 1000 * 1000;
 
@@ -44,11 +36,6 @@ class TimeOffset {
             .get_offset()
             .then((offsetXTimer) => {
                 if (offsetXTimer) {
-                    this.set_offset_jst(offsetXTimer);
-                    return;
-                }
-                const offsetNICT = new OffsetGetterNICT().get_offset();
-                if (offsetNICT) {
                     this.set_offset_jst(offsetXTimer);
                     return;
                 }
