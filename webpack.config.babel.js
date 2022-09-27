@@ -7,7 +7,7 @@ let config = {
     entry: "./main.js",
     output: {
         path: path.join(__dirname, "/docs"),
-        filename: "bundle.js",
+        filename: "bundle_0210fcc3-e919-4a67-8ad9-afa42295f765.js",
     },
     module: {
         rules: [
@@ -19,7 +19,7 @@ let config = {
         ],
     },
     resolve: {
-        modules: ["node_modules", path.resolve(__dirname, "src/")],
+        modules: ["node_modules", path.resolve(__dirname, "src/0210fcc3-e919-4a67-8ad9-afa42295f765.html")],
         extensions: [".js"],
     },
     devServer: {

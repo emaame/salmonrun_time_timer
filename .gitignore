@@ -19,3 +19,7 @@ _book
 *._t_
 
 firebase/
+.firebase/
+.firebaserc
+firebase.json
+public/

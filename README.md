@@ -1,13 +1,17 @@
 # Salmon Run Time Timer
 A web-based countdown Timer for Salmon Run Time.
 
-# Usage
+## memo
+
+一時的に docs にビルド、public 以下を deploy する設定にしている（firebase の設定を docs 以下を公開するように直すこと）
+
+## Usage
 [サーモンランタイム タイマー](https://emaame.github.io/salmonrun_time_timer/) にアクセスするだけ！
 
-# フレンド部屋用モード追加しました
+## フレンド部屋用モード追加しました
 2秒遅れモードです。MDL の Switch にしたかったのですが、うまくいきませんでした。
 
-# サーモンランタイムって？
+## サーモンランタイムって？
 
 [@rayudne75](https://github.com/emaame/splatnet2statink) 様、提唱の草の根運動です。
 
@@ -15,20 +19,20 @@ A web-based countdown Timer for Salmon Run Time.
 
 テッパン・モグラを誘導できるイカをスナイプ！
 
-# 時刻合わせについて
-v1.1 (2017/12/25) から、「NICT インターネット時刻供給サービス」のJSON形式時刻情報を取得し、時間合わせを行うようにしました。
+## 時刻合わせについて
 
-NICT のサーバへの負荷を減らすためロード時に一回だけ時刻合わせを行います。
-長時間の利用の場合には、必ず数時間程度の間隔を置いてからリロードをお願いします。
+X-Timer ヘッダを利用して時刻合わせを行う方法に修正しました。
 
-# Install to local
+## Install to local
+
 ```
 git clone https://github.com/emaame/salmonrun_time_timer.git
 ```
 
 `docs` フォルダ以下が必要なファイルになります。
 
-# Build
+### Build
+
 ビルドには [Node.js](https://nodejs.org/ja/) と [Yarn](https://classic.yarnpkg.com/ja/docs/install/#windows-stable) を入れて
 
 ```
@@ -38,11 +42,14 @@ yarn webpack
 
 `src/*.js` are packed to `docs/bundle.js`.
 
-# webpack-dev-server
+### webpack-dev-server
+
 `yarn serve`
 
-# Run test
+### Run test
+
 `yarn test`
 
-# License
+## License
+
 [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/deed.ja)

@@ -54,11 +54,13 @@ class App {
         this.elmEtaLabel = document.getElementById("eta_label");
         this.elmOffset = document.getElementById("offset");
 
+        /*
         this.elmModeFriend = document.getElementById(KEY_MODE_FRIEND);
         this.elmModeFriend.addEventListener(
             "click",
             this.on_change_modeFriend.bind(this)
         );
+        */
 
         this.elmModeFrequencyUpdate = document.getElementById(
             KEY_MODE_FRIQUENCY_UPDATE
@@ -98,7 +100,7 @@ class App {
         this.update(true);
     }
     calc_eta() {
-        this.list = this.timer.listup_next_STT();
+        this.list = this.timer.listup_next_STT(Date.now(), 2, 8, true);
         const now = this.time_offset.get_time();
         const eta_ms = this.list[0] - now;
         this.notify_sound(eta_ms);
@@ -202,7 +204,7 @@ class App {
         }
     }
     on_load() {
-        this.elmModeFriend.checked = Config[KEY_MODE_FRIEND];
+        // this.elmModeFriend.checked = Config[KEY_MODE_FRIEND];
         this.elmModeFrequencyUpdate.checked = Config[KEY_MODE_FRIQUENCY_UPDATE];
         this.elmUseSound.checked = Config[KEY_USE_SOUND];
         this.on_change_modeFriend();
@@ -215,7 +217,8 @@ class App {
         const classForNornalModeFore = "mdl-color-text--grey-600";
         const classForFriendModeFore = "mdl-color-text--yellow-600";
 
-        const modeFriend = this.elmModeFriend.checked;
+        // const modeFriend = this.elmModeFriend.checked;
+        const modeFriend = false;
         this.elmEtaArea.classList.remove(classForNornalModeBack);
         this.elmEtaArea.classList.remove(classForFriendModeBack);
 
@@ -235,7 +238,7 @@ class App {
             this.elmOffset.classList.add(classForNornalModeFore);
         }
 
-        Config.save(KEY_MODE_FRIEND, modeFriend);
+        // Config.save(KEY_MODE_FRIEND, modeFriend);
 
         this.update(false);
     }

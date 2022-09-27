@@ -72,6 +72,9 @@ a {
   width: 28px;
 }
 
+.eta-header-color {
+  background-color: #603bff;
+}
 
 .stt-header {
   overflow: visible;
@@ -429,7 +432,7 @@ a {
     text-align: center;
   }
   .st-matsuri a {
-    color: #1a237e;
+    color: #f57f17;
     font-weight: bold;
   }
   .st-matsuri dt {
