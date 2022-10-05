@@ -173,6 +173,7 @@ class App {
         }
     }
     update_list() {
+        // TODO: GST 用のクラスを付けたい（2時間ごとのステージ更新後最初の02分時間割）
         // list
         for (let i in this.list) {
             const elmSTT = document.getElementById(

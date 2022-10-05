@@ -5,7 +5,7 @@ class SalmonrunTimeTimer {
 
     // UTC 基準で残り時間を出す
     // テストしやすいように基準の日時を渡せるようにした
-    listup_next_STT(date = Date.now(), origin = 2, interval = 8, do_addition_52_after_50 = false) {
+    listup_next_STT(date = Date.now(), origin = 2, interval = 8, replace_50_to_52 = false) {
         var list = [];
         var base;
         if (this.time_offset) {
@@ -20,7 +20,7 @@ class SalmonrunTimeTimer {
         // in this hour (upto 1st(:02),2nd(:10), ... ,7th(:50))
         var hours = base.getUTCHours();
 
-        const useAdditional52 = do_addition_52_after_50 && interval == 8 && origin == 2;
+        const use52 = replace_50_to_52 && interval == 8 && origin == 2;
         const maxPeriod = Math.floor(60 / interval);
 
         const add_new_time_to_list = (list, base, hours, minutes) => {
@@ -46,9 +46,14 @@ class SalmonrunTimeTimer {
                 // 10分間隔の場合（52分 をありにする）
                 if (next_minutes >= 60 && next_minutes % 60 > origin) break;
 
+                // 50を52で置き換える場合は、50の登録を飛ばす
+                if (use52 && minutes == 50) break;
+
                 add_new_time_to_list(list, base, hours, minutes);
+                last_minutes = minutes;
             }
-            if (useAdditional52 && list.length < 7 && last_minutes < 52) {
+            // 50を52で置き換える場合は、52の登録
+            if (use52 && list.length < 7 && last_minutes < 52) {
                 add_new_time_to_list(list, base, hours, 52);
             }
             // for next hour

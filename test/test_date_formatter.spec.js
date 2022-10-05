@@ -16,7 +16,7 @@ describe('DateFormatter', () => {
         });
         it('23:58:59.987 で 58:59.987 を返すこと', () => {
             const d = new Date(Date.parse('2017-12-31T23:58:59.987+09:00'));
-            console.log(d);
+            // console.log(d);
             expect(date_formatter.getMonthTextInLocalTime(d)).to.eql("12/31 23:58:59");
         });
     });
