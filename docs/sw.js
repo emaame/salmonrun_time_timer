@@ -1,4 +1,4 @@
-const VERSION = "1.6.0.9";
+const VERSION = "1.6.1.0";
 const CACHE_NAME = `salmonrun_time_timer-${VERSION}`;
 self.addEventListener("install", (e) => {
     e.waitUntil(
@@ -8,6 +8,8 @@ self.addEventListener("install", (e) => {
                     `./`,
                     `./index.html`,
                     `./favicon.png`,
+                    `./favicon_stt.png`,
+                    `./favicon_stt2.png`,
                     `./bundle.js`,
                     `./golden_egg.png`,
                     `./styles.css`,
