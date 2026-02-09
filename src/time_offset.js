@@ -54,7 +54,7 @@ class TimeOffset {
 }
 
 export class OffsetGetterXTimer {
-    constructor() {}
+    constructor() { }
 
     parse(xtimer) {
         // see https://docs.fastly.com/en/guides/understanding-the-xtimer-header
@@ -95,44 +95,6 @@ export class OffsetGetterXTimer {
         } catch (e) {
             return null;
         }
-    }
-}
-export class OffsetGetterNICT {
-    constructor() {}
-
-    get_offset() {
-        const diff = Date.now() - Config[KEY_TIMEOFFSET_UPDATED_AT];
-        if (diff < THRESHOLD_TIME_UPDATE_IN_MS) {
-            return null;
-        }
-
-        const server_no = Math.floor(Math.random() * 3);
-        const server_addr = ServerList[server_no];
-        // ランダムで一つのサーバにアクセスすれば十分
-        getJSON(
-            server_addr + "?" + new Date().getTime() / 1000,
-            (err, json) => {
-                if (err) {
-                    alert(
-                        "時刻の取得ができなかったので、以前の補正値をそのまま使います"
-                    );
-                    this.use_cached_data();
-                    //console.log(String(err));
-                    return null;
-                }
-                const now = new Date(); // Receive time
-                if (json.st && json.it && json.leap && json.next && json.step) {
-                    json.rt = now.getTime(); // Receive time
-                    json.it = Number(json.it) * 1000; // Initiate time
-                    json.st = Number(json.st) * 1000; // Send time
-                    json.lb = json.it - 16 - json.st; // estimated lower bound
-                    json.ub = json.rt + 16 - json.st; // estimated upper bound
-
-                    // 詰まるところ必要なのは中央の修正値だけ
-                    this.set_offset_jst(-(json.lb + json.ub) / 2);
-                }
-            }
-        );
     }
 }
 
